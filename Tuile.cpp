@@ -8,6 +8,8 @@ Tuile::Tuile(int* h,int* d,int* b,int* g) : haut{h},droite{d},bas{b},gauche{g}{
     cout<<"Construction de "<< *this<<endl;
 }
 
+
+
 Tuile::~Tuile(){
     cout<<"Destruction de "<<*this<<endl;
     delete haut;
