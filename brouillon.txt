@@ -97,3 +97,30 @@ int main(){
     }
     return EXIT_SUCCESS;
 }
+
+
+
+
+
+
+CPP=g++ --std=c++11 -Wall
+
+all : test
+
+Tuile.o : Tuile.cpp Tuile.hpp
+	$(CPP) -c Tuile.cpp
+
+Joueur.o : Joueur.cpp Joueur.hpp
+	$(CPP) -c Joueur.cpp
+
+DominosCarres.o : DominosCarres.cpp DominosCarres.hpp
+	$(CPP) -c DominosCarres.cpp
+
+test.o : test.cpp Tuile.hpp Joueur.hpp DominosCarres.hpp
+	$(CPP) -c test.cpp
+
+test : Tuile.o Joueur.o DominosCarres.o test.o
+	$(CPP) -o test test.o Tuile.o Joueur.o DominosCarres.o
+
+clean :
+	rm *.o *.exe
