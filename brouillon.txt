@@ -1,0 +1,99 @@
+#include <iostream>
+#include <SFML/Graphics.hpp> 
+using namespace sf;
+using namespace std;
+
+int main(){
+   // definition de la fenêtre
+    RenderWindow app(VideoMode(800, 600, 32), "Ma premiere fenetre SFML ! ");
+    // Hello world
+    Font font;
+    font.loadFromFile("../Agatha.ttf");
+    
+    Text text;
+    text.setFont(font);
+    text.setString("Projet");
+    text.setCharacterSize(100); // in pixels, not points!
+    text.setFillColor(Color::Red);
+    
+
+    Text dominoText;
+    dominoText.setFont(font);
+    dominoText.setString("Dominos carres");
+    dominoText.setCharacterSize(100);
+    dominoText.setScale(Vector2f(0.5,0.5));
+    dominoText.move(Vector2f(200, 200));
+    
+    Text traxText;
+    traxText.setFont(font);
+    traxText.setString("Trax");
+    traxText.setCharacterSize(100);
+    traxText.setScale(Vector2f(0.5,0.5));
+    traxText.move(Vector2f(200, 300));
+
+    Text carcaText;
+    carcaText.setFont(font);
+    carcaText.setString("Carcassonne");
+    carcaText.setCharacterSize(100);
+    carcaText.setScale(Vector2f(0.5,0.5));
+    carcaText.move(Vector2f(200, 400));
+
+    RectangleShape tuile;
+    tuile.setSize(Vector2f(100, 100));
+    tuile.setFillColor(Color::Green);
+    
+    
+    
+
+    while (app.isOpen())
+    {
+        Event event;
+        while (app.pollEvent(event))
+        switch (event.type) {
+                case Event::Closed: 
+                app.close();
+                break;
+        
+                case Event::KeyPressed:
+                        if (event.key.code==Keyboard::Return) cout << "salut"  << endl;
+                        break;
+
+                default:
+                        break;
+        }
+    // fin du while
+
+    	
+
+    // Remplissage de l'écran (couleur noire par défaut)
+    app.clear();
+
+    // Store the bounding box of the sprite
+    // FloatRect bounds_t1 = tuile.getGlobalBounds();    
+    // FloatRect bounds_t2 = tuile2.getGlobalBounds();
+    
+    // rq: je l'ai mis là et pas dans la gestion des évenements... surement que ce serait mieux là bas
+    if(Mouse::isButtonPressed(Mouse::Left)) {
+        
+        // transform the mouse position from window coordinates to world coordinates
+        Vector2f mouse = app.mapPixelToCoords(Mouse::getPosition(app));
+        
+        // select the current Sprite
+        // if (bounds_t1.contains(mouse)) current = & tuile;  
+        // if (bounds_t2.contains(mouse)) current = & tuile2;
+    }
+
+    // dessin en interne de nos Sprites
+    // app.draw(tuile);
+    // app.draw(tuile2);
+    // app.draw(text);
+    // app.draw(dominoText);
+    // app.draw(traxText);
+    // app.draw(carcaText);
+    app.draw(tuile);
+
+    // Affichage de la fenêtre à l'écran
+    app.display();
+    }
+    return EXIT_SUCCESS;
+}
