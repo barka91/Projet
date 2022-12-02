@@ -12,14 +12,7 @@ int main()
 	DomEngine domEngine;
 
 	//Game loop
-	while (domEngine.running())
-	{
-		//Update
-		domEngine.update();
-
-		//Render
-		domEngine.render();
-	}
+	domEngine.run();
 
 	//End of application
 	return 0;

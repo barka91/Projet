@@ -6,7 +6,7 @@ using namespace std;
 Joueur::Joueur(string p,int i):id{i}, pseudo{p},point{0}{}
 
 Joueur::~Joueur(){
-    cout<<"destruction de "<<*this;
+    cout<<"destruction de joueur "<<*this;
 }
 
 ostream& operator<<(ostream& out, Joueur &j){

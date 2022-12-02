@@ -19,6 +19,7 @@ DominosCarres::DominosCarres(int nj, vector <Joueur *> tj): nbJoueurs{nj}{
     }
 
     for(unsigned int i =0; i<20 ; i++)
+    // 
         sac.push_back( new Tuile{tabCote[rand()%15],tabCote[rand()%15],tabCote[rand()%15],tabCote[rand()%15]} );
     
 }
