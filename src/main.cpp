@@ -9,7 +9,7 @@ int main()
 	std::srand(static_cast<unsigned>(time(NULL)));
 
 	//Init Game engine
-	DomEngine domEngine;
+	DomEngine domEngine{2};
 
 	//Game loop
 	domEngine.run();

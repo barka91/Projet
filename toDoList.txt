@@ -1,0 +1,10 @@
+*afficher une tuile de depart* 
+
+afficher une tuile aleatoire en bas de la page
+->on prend la premier de la pioche  
+
+demander au joueur ou la placer 
+(faire une bouton pour tourner la tuile et l'afficher une fois tourné) 
+    si bonne place -> la placer a l'endroit et on leleve de la pioche
+    sinon passer son tour et afficher une autre tuile pour le joueur suivant et on la mets a la fin de la pioche
+    

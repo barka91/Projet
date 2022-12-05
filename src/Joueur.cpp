@@ -3,18 +3,18 @@
 
 using namespace std;
 
-Joueur::Joueur(string p,int i):id{i}, pseudo{p},point{0}{}
+Joueur::Joueur(int i):id{i}, point{0}{}
 
 Joueur::~Joueur(){
     cout<<"destruction de joueur "<<*this;
 }
 
 ostream& operator<<(ostream& out, Joueur &j){
-    out << "Joueur est " << j.getPseudo() << endl;
+    out << "Joueur est " << j.getId() << endl;
     return out;
 }
 
-string Joueur::getPseudo(){return pseudo;}
+int Joueur::getId(){return id;}
 
 void Joueur::setPoint(int p){
     point += p;

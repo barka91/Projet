@@ -9,13 +9,13 @@ using namespace std;
 class Joueur{
     private:
         int id;
-        const string pseudo;
+        
         int point;
         
     public:
-        Joueur(string p,int i);
+        Joueur(int i);
         virtual ~Joueur();
-        string getPseudo();
+        int getId();
         void setPoint(int p);
 
     friend ostream& operator <<(ostream& out, Joueur &j) ;

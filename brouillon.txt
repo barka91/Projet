@@ -124,3 +124,8 @@ test : Tuile.o Joueur.o DominosCarres.o test.o
 
 clean :
 	rm *.o *.exe
+
+
+
+    ------------------------------------------------------------------------
+

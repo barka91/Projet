@@ -5,7 +5,7 @@
 
 using namespace std;
 
-Tuile::Tuile(vector<int> h,vector<int> d,vector<int> b,vector<int> g) {
+Tuile::Tuile(vector<int> h,vector<int> d,vector<int> b,vector<int> g, Vector2f pos) {
 
     haut=h;
     droite=d;
@@ -17,7 +17,7 @@ Tuile::Tuile(vector<int> h,vector<int> d,vector<int> b,vector<int> g) {
     sprite.setSize(Vector2f(100.f,100.f));
 	auto bounds = sprite.getLocalBounds();
 	sprite.setOrigin( bounds.width / 2.f, bounds.height / 2.f );
-	sprite.setPosition(sf::Vector2f(SCRWIDTH/2.0f,SCRHEIGHT/2.0f));
+    // sf::Vector2f(SCRWIDTH/2.0f,SCRHEIGHT/2.0f)
 
     // chargement de la police
 	font.loadFromFile("assets/fonts/roboto.ttf");
@@ -26,21 +26,19 @@ Tuile::Tuile(vector<int> h,vector<int> d,vector<int> b,vector<int> g) {
 	top.setFont(font);
     // top.setString("1   2   3");
     setTuileString(getHaut(),&top);
-	top.setCharacterSize(25);
+	top.setCharacterSize(20);
   	top.setFillColor(Color::Red);
 	auto boundsTop = top.getLocalBounds();
 	top.setOrigin( boundsTop.width / 2.f, boundsTop.height / 2.f );
-	top.setPosition(sprite.getPosition().x,sprite.getPosition().y-40.f);
 
     // initialisation de la partie gauche de la tuile
     left.setFont(font);
     setTuileString(getGauche(),&left);
     // top.setString("1   2   3");
-	left.setCharacterSize(25);
+	left.setCharacterSize(20);
   	left.setFillColor(Color::Green);
 	auto boundsLeft = left.getLocalBounds();
 	left.setOrigin( boundsLeft.width / 2.f, boundsLeft.height / 2.f );
-	left.setPosition(sprite.getPosition().x-40.f,sprite.getPosition().y);
     left.setRotation(-90.f);
 
 
@@ -48,28 +46,44 @@ Tuile::Tuile(vector<int> h,vector<int> d,vector<int> b,vector<int> g) {
     right.setFont(font);
     // top.setString("1   2   3");
     setTuileString(getDroite(),&right);
-	right.setCharacterSize(25);
+	right.setCharacterSize(20);
   	right.setFillColor(Color::Magenta);
 	auto boundsRight = right.getLocalBounds();
 	right.setOrigin( boundsRight.width / 2.f, boundsRight.height / 2.f );
-	right.setPosition(sprite.getPosition().x+40.f,sprite.getPosition().y);
     right.setRotation(90.f);
 
     // initialisation du bas de la tuile
 	down.setFont(font);
     setTuileString(getBas(),&down);
 	// down.setString("1   2   3");
-	down.setCharacterSize(25);
+	down.setCharacterSize(20);
   	down.setFillColor(Color::Cyan);
 	auto boundsDown = down.getLocalBounds();
 	down.setOrigin( boundsDown.width / 2.f, boundsDown.height / 2.f );
-	down.setPosition(sprite.getPosition().x,sprite.getPosition().y+30.f);
+
+    // initialisation de la position de la tuile 
+    setPosition(pos);
 
     cout<<"Construction de "<< *this<<endl;
 }
 
+Tuile::Tuile(Tuile &t):
+    haut{t.getHaut()},
+    droite{t.getDroite()},
+    bas{t.getBas()},
+    gauche{t.getGauche()},
+    sprite{t.getSprite()},
+    font{t.getFont()},
+    top{t.getTop()},
+    left{t.getLeft()},
+    right{t.getRight()},
+    down{t.getDown()}
+{
+    // constructeur par copie
+}
+
 Tuile::~Tuile(){
-    // cout<<"Destruction de tuile "<<*this<<endl;
+     cout<<"Destruction de tuile "<<*this<<endl;
 }
 
 vector<int> Tuile::getBas(){return bas;}
@@ -79,10 +93,21 @@ vector<int> Tuile::getGauche(){return gauche;}
 
 RectangleShape Tuile::getSprite(){return sprite;}
 
+Font Tuile::getFont(){return font;}
+
 Text Tuile::getTop(){return top;}
 Text Tuile::getLeft(){return left;}
 Text Tuile::getRight(){return right;}
 Text Tuile::getDown(){return down;}
+
+Vector2f Tuile::getPosition(){return sprite.getPosition();}
+void Tuile::setPosition(Vector2f pos){
+    sprite.setPosition(pos);
+	top.setPosition(pos.x,pos.y-40.f);
+	left.setPosition(pos.x-40.f,pos.y);	
+    right.setPosition(pos.x+40.f,pos.y);
+	down.setPosition(pos.x,pos.y+30.f);
+}
 
 void Tuile::setTuileString(vector<int> v,Text* t)
 {

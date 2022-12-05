@@ -24,24 +24,25 @@ class Tuile{
         Text top;
         Text left;
         Text right;
-        Text down;
-
-        // Vector2f position;
-        
+        Text down;        
         
     public:
-        Tuile(vector<int> h,vector<int> d,vector<int> b,vector<int> g);
+        Tuile(vector<int> h,vector<int> d,vector<int> b,vector<int> g, Vector2f pos);
+        Tuile(Tuile &t);
         virtual ~Tuile();
-        vector<int> getHaut();
+        vector<int> getHaut() ;
         vector<int> getDroite();
         vector<int> getBas();
         vector<int> getGauche();
 
         RectangleShape getSprite();
+        Font getFont();
         Text getTop();
         Text getLeft();
         Text getRight();
         Text getDown();
+
+        Vector2f getPosition();
 
         void setTuileString(vector<int> v,Text* t);
 
@@ -49,6 +50,9 @@ class Tuile{
         void setD(vector<int> t);
         void setB(vector<int> t);
         void setG(vector<int> t);
+
+        void setPosition(Vector2f pos);
+
         void tourner();
 
     friend ostream& operator <<(ostream& out, Tuile &t) ;        

@@ -5,6 +5,8 @@
 #include<string>
 #include<vector>
 #include "Tuile.hpp"
+#include "Joueur.hpp"
+
 
 using namespace std;
 using namespace sf;
@@ -13,25 +15,37 @@ class DomEngine{
     const int SCRWIDTH = 800;
     const int SCRHEIGHT = 600;
     private:
-        //Window
+        // window
         RenderWindow* window;
         VideoMode videoMode;
         Event ev;
 
-        Tuile tuile;
-        
+        // graphic
+        RectangleShape wall;
+
+        // system
+        int nbJoueurs;
+        Tuile* tuileDeDepart;
+        Tuile* currentTuile;
+        vector<Joueur> tabJoueurs;
+        vector<Tuile *> sac;
+        vector<vector<int>> tabCote ;
+
     public:
         // constructeur et destructeur
-        DomEngine();
+        DomEngine(int nj);
         virtual ~DomEngine();
 
         // fonctions
-        void drawTuile(Tuile t);
+        void drawTuile(Tuile* t);
 
         void input();
         void update();
         void draw();
         void run();
+
+        void startTheGame();
+
         
 };
 

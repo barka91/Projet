@@ -1,7 +1,6 @@
 #ifndef _DOMINOSCARRES
 #define _DOMINOSCARRES
 #include "Tuile.hpp"
-#include "Joueur.hpp"
 #include<iostream>
 #include<string>
 #include<vector>
@@ -16,7 +15,7 @@ class DominosCarres{
         vector<vector<int>> tabCote ; 
 
     public:
-        DominosCarres(int nj, vector <Joueur*> tj);
+        DominosCarres(int nj);
         virtual ~DominosCarres();
         Tuile pioche();
         int getNbJoueur();
