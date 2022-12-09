@@ -31,7 +31,7 @@ class DomEngine{
         vector<Joueur> tabJoueurs;
         vector<Tuile*> sac;
         vector<vector<int>> tabCote ;
-        vector<EmplacementVide> tabEmplacement;
+        vector<EmplacementVide*> tabEmplacement;
         vector<Tuile*> plateau;
 
     public:
@@ -48,6 +48,7 @@ class DomEngine{
         void run();
 
         void startTheGame();
+        void verification(EmplacementVide* ev);
 
         
 };

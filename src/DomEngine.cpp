@@ -42,10 +42,10 @@ void DomEngine::startTheGame() {
 	sac.erase(sac.begin());
 	
 	//initialisation des 4 emplacements disponible de base 
-	tabEmplacement.push_back(EmplacementVide(Vector2f(tuileDeDepart->getPosition().x,tuileDeDepart->getPosition().y+100)));
-	tabEmplacement.push_back(EmplacementVide(Vector2f(tuileDeDepart->getPosition().x,tuileDeDepart->getPosition().y-100)));
-	tabEmplacement.push_back(EmplacementVide(Vector2f(tuileDeDepart->getPosition().x+100,tuileDeDepart->getPosition().y)));
-	tabEmplacement.push_back(EmplacementVide(Vector2f(tuileDeDepart->getPosition().x-100,tuileDeDepart->getPosition().y)));
+	tabEmplacement.push_back(new EmplacementVide{Vector2f(tuileDeDepart->getPosition().x,tuileDeDepart->getPosition().y+100)});
+	tabEmplacement.push_back(new EmplacementVide{Vector2f(tuileDeDepart->getPosition().x,tuileDeDepart->getPosition().y-100)});
+	tabEmplacement.push_back(new EmplacementVide{Vector2f(tuileDeDepart->getPosition().x+100,tuileDeDepart->getPosition().y)});
+	tabEmplacement.push_back(new EmplacementVide{Vector2f(tuileDeDepart->getPosition().x-100,tuileDeDepart->getPosition().y)});
 
 
 	// initialisation de laffichage de la 1er tuile de la pioche
@@ -61,6 +61,22 @@ void DomEngine::startTheGame() {
 	// wall.setPosition(position);
 
 
+}
+
+void DomEngine::verification(EmplacementVide* ev){
+	bool check = false;
+	for (auto & e : tabEmplacement) {
+		if (ev->getShape().getGlobalBounds().intersects(e->getShape().getGlobalBounds())){
+			return;
+		}
+	}
+	for (auto & t : plateau){
+		if (ev->getShape().getGlobalBounds().intersects(t->getSprite().getGlobalBounds())){
+			return;
+		}
+	}
+
+	tabEmplacement.push_back(ev);
 }
 
 void DomEngine::drawTuile(Tuile* t)
@@ -99,44 +115,54 @@ void DomEngine::input()
 			if (this->ev.mouseButton.button == sf::Mouse::Left){
 				Vector2f mouse = window->mapPixelToCoords(Mouse::getPosition(*window));
 				for (size_t i = 0; i < tabEmplacement.size(); i++) {
-					EmplacementVide e = tabEmplacement.at(i);
-					FloatRect bounds=e.getShape().getGlobalBounds();
+					EmplacementVide* e = tabEmplacement.at(i);
+					FloatRect bounds=e->getShape().getGlobalBounds();
 					if (bounds.contains(mouse)){
 						// si verification ok:
 
 						// on place la tuile a la place choisi
-						sac.at(0)->setPosition(e.getShape().getPosition());
+						sac.at(0)->setPosition(e->getShape().getPosition());
 						plateau.push_back(sac.at(0));
 						tabEmplacement.erase(tabEmplacement.begin() + i);
 					}
 				}
 				// on place les nouveaux emplacements vides 
 
+				EmplacementVide* a = new EmplacementVide{Vector2f(sac.at(0)->getPosition().x,sac.at(0)->getPosition().y+100)};
+				verification(a);
+				EmplacementVide* b = new EmplacementVide{Vector2f(sac.at(0)->getPosition().x,sac.at(0)->getPosition().y-100)};
+				verification(b);
+				EmplacementVide* c = new EmplacementVide{Vector2f(sac.at(0)->getPosition().x+100,sac.at(0)->getPosition().y)};
+				verification(c);
+				EmplacementVide* d = new EmplacementVide{Vector2f(sac.at(0)->getPosition().x-100,sac.at(0)->getPosition().y)};
+				verification(d);
+				
+				// cout<<"***"<<tabEmplacement.size()<<endl;
+				
+				// for (auto & f : tabEmplacement) {
+				// cout<<"++"<<tabEmplacement.size()<<endl;
+					
+					
+				// 	if (!(a->getShape().getGlobalBounds().intersects(f->getShape().getGlobalBounds()))) {
+				// 		tabEmplacement.push_back(EmplacementVide(Vector2f(sac.at(0)->getPosition().x,sac.at(0)->getPosition().y+100)));
+				// 	}
+	
+				// 	if (!(b->getShape().getGlobalBounds().intersects(f->getShape().getGlobalBounds()))) {
+				// 		tabEmplacement.push_back(EmplacementVide(Vector2f(sac.at(0)->getPosition().x,sac.at(0)->getPosition().y-100)));
+				// 	}
+					
+				// 	if (!(c.getShape().getGlobalBounds().intersects(f.getShape().getGlobalBounds()))) {
+				// 		tabEmplacement.push_back(EmplacementVide(Vector2f(sac.at(0)->getPosition().x+100,sac.at(0)->getPosition().y)));
+				// 	}
+				// 	if (!(d.getShape().getGlobalBounds().intersects(f.getShape().getGlobalBounds()))) {
+				// 		tabEmplacement.push_back(EmplacementVide(Vector2f(sac.at(0)->getPosition().x-100,sac.at(0)->getPosition().y)));
+				// 	}
+					
+					
+				// cout<<"--"<<tabEmplacement.size()<<endl;
 
-				for (auto & f : tabEmplacement) {
-					EmplacementVide *a = new EmplacementVide(Vector2f(sac.at(0)->getPosition().x,sac.at(0)->getPosition().y+100));
-					EmplacementVide *b = new EmplacementVide(Vector2f(sac.at(0)->getPosition().x,sac.at(0)->getPosition().y-100));
-					EmplacementVide *c = new EmplacementVide(Vector2f(sac.at(0)->getPosition().x+100,sac.at(0)->getPosition().y));
-					EmplacementVide *d = new EmplacementVide(Vector2f(sac.at(0)->getPosition().x-100,sac.at(0)->getPosition().y));
-					cout<<tabEmplacement.size()<<endl;
-					if (!(a->getShape().getGlobalBounds().intersects(f.getShape().getGlobalBounds()))) {
-						tabEmplacement.push_back(*a);
-					}
-					else delete a;
-					if (!(b->getShape().getGlobalBounds().intersects(f.getShape().getGlobalBounds()))) {
-						tabEmplacement.push_back(*b);
-					}
-					else delete b;
-					if (!(c->getShape().getGlobalBounds().intersects(f.getShape().getGlobalBounds()))) {
-						tabEmplacement.push_back(*c);
-					}
-					else delete c;
-					if (!(d->getShape().getGlobalBounds().intersects(f.getShape().getGlobalBounds()))) {
-						tabEmplacement.push_back(*d);
-					}
-					else delete d; 
-
-				}
+				// }
+				// cout<<tabEmplacement.size()<<endl;
 				sac.erase(sac.begin());
 			
 		 
@@ -144,6 +170,8 @@ void DomEngine::input()
 		}
 	}
 }
+
+
 
 void DomEngine::update()
 {
@@ -158,7 +186,7 @@ void DomEngine::draw()
 	// drawTuile(tuileDeDepart);
 	drawTuile(sac.at(0));
 	for (auto & e : tabEmplacement) {
-    	window->draw(e.getShape());
+    	window->draw(e->getShape());
   	}
 	
 	for (auto & p : plateau) {
