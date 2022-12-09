@@ -59,10 +59,10 @@ class Tuile{
 
         void setTuileString(vector<int> v,Text* t);
 
-        void setH(vector<int> t);
-        void setD(vector<int> t);
-        void setB(vector<int> t);
-        void setG(vector<int> t);
+        void setHaut(vector<int> t);
+        void setDroite(vector<int> t);
+        void setBas(vector<int> t);
+        void setGauche(vector<int> t);
 
         Tuile* getNord();
 

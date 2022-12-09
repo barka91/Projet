@@ -128,24 +128,24 @@ void Tuile::setTuileString(vector<int> v,Text* t)
     
 }
 
-void Tuile::setB(vector<int> t) { bas = t; }
-void Tuile::setD(vector<int> t){ droite = t;}
-void Tuile::setG(vector<int> t){ gauche = t;}
-void Tuile::setH(vector<int> t){ haut = t;}
+void Tuile::setBas(vector<int> t) { bas = t; }
+void Tuile::setDroite(vector<int> t){ droite = t;}
+void Tuile::setGauche(vector<int> t){ gauche = t;}
+void Tuile::setHaut(vector<int> t){ haut = t;}
 
 // Tuile* Tuile::getNord(){return nord;}
 
 void Tuile::tourner(){
     vector<int> tmpH = getHaut();
-    setH( getGauche() );
+    setHaut( getGauche() );
     setTuileString(haut,&top);
     vector<int> tmpD = getDroite();
-    setD( tmpH );
+    setDroite( tmpH );
     setTuileString(droite,&right);
     vector<int> tmpB = getBas();
-    setB( tmpD );
+    setBas( tmpD );
     setTuileString(bas,&down);
-    setG( tmpB );
+    setGauche( tmpB );
     setTuileString(gauche,&left);
 }
 
