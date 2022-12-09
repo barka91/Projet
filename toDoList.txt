@@ -8,3 +8,10 @@ demander au joueur ou la placer
     si bonne place -> la placer a l'endroit et on leleve de la pioche
     sinon passer son tour et afficher une autre tuile pour le joueur suivant et on la mets a la fin de la pioche
     
+
+des quon place une tuile, des emplacements vide sont placer 
+-> si il y a deja une tuile on fait rien 
+->si il y en a deja un on modifie son atribut
+
+
+/*si ca crash c'est surement qu'on draw qqc qui nexiste pas*/

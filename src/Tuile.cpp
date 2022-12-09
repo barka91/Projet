@@ -61,8 +61,11 @@ Tuile::Tuile(vector<int> h,vector<int> d,vector<int> b,vector<int> g, Vector2f p
 	auto boundsDown = down.getLocalBounds();
 	down.setOrigin( boundsDown.width / 2.f, boundsDown.height / 2.f );
 
+
     // initialisation de la position de la tuile 
     setPosition(pos);
+
+    
 
     cout<<"Construction de "<< *this<<endl;
 }
@@ -80,6 +83,13 @@ Tuile::Tuile(Tuile &t):
     down{t.getDown()}
 {
     // constructeur par copie
+}
+
+Tuile::Tuile(){
+    sprite.setFillColor(Color::Blue);
+    sprite.setSize(Vector2f(100.f,100.f));
+	auto bounds = sprite.getLocalBounds();
+	sprite.setOrigin( bounds.width / 2.f, bounds.height / 2.f );
 }
 
 Tuile::~Tuile(){
@@ -123,14 +133,20 @@ void Tuile::setD(vector<int> t){ droite = t;}
 void Tuile::setG(vector<int> t){ gauche = t;}
 void Tuile::setH(vector<int> t){ haut = t;}
 
+// Tuile* Tuile::getNord(){return nord;}
+
 void Tuile::tourner(){
     vector<int> tmpH = getHaut();
     setH( getGauche() );
+    setTuileString(haut,&top);
     vector<int> tmpD = getDroite();
     setD( tmpH );
+    setTuileString(droite,&right);
     vector<int> tmpB = getBas();
     setB( tmpD );
+    setTuileString(bas,&down);
     setG( tmpB );
+    setTuileString(gauche,&left);
 }
 
 ostream& operator<<( ostream& out , Tuile &t){

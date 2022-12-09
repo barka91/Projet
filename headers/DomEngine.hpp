@@ -6,6 +6,7 @@
 #include<vector>
 #include "Tuile.hpp"
 #include "Joueur.hpp"
+#include "EmplacementVide.hpp"
 
 
 using namespace std;
@@ -28,8 +29,10 @@ class DomEngine{
         Tuile* tuileDeDepart;
         Tuile* currentTuile;
         vector<Joueur> tabJoueurs;
-        vector<Tuile *> sac;
+        vector<Tuile*> sac;
         vector<vector<int>> tabCote ;
+        vector<EmplacementVide> tabEmplacement;
+        vector<Tuile*> plateau;
 
     public:
         // constructeur et destructeur

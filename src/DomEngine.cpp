@@ -38,10 +38,20 @@ void DomEngine::startTheGame() {
 	// initalisation de la tuile de depart
 	tuileDeDepart=sac.at(0);
 	tuileDeDepart->setPosition(sf::Vector2f(SCRWIDTH/2.0f,SCRHEIGHT/2.0f));
+	plateau.push_back(tuileDeDepart);
 	sac.erase(sac.begin());
+	
+	//initialisation des 4 emplacements disponible de base 
+	tabEmplacement.push_back(EmplacementVide(Vector2f(tuileDeDepart->getPosition().x,tuileDeDepart->getPosition().y+100)));
+	tabEmplacement.push_back(EmplacementVide(Vector2f(tuileDeDepart->getPosition().x,tuileDeDepart->getPosition().y-100)));
+	tabEmplacement.push_back(EmplacementVide(Vector2f(tuileDeDepart->getPosition().x+100,tuileDeDepart->getPosition().y)));
+	tabEmplacement.push_back(EmplacementVide(Vector2f(tuileDeDepart->getPosition().x-100,tuileDeDepart->getPosition().y)));
+
 
 	// initialisation de laffichage de la 1er tuile de la pioche
-	currentTuile=sac.at(0) ;
+	// currentTuile=sac.at(0);
+
+	 
 
 	//  initialisation du decor
 	wall.setFillColor(Color::Green);
@@ -60,6 +70,8 @@ void DomEngine::drawTuile(Tuile* t)
 	window->draw(t->getLeft());
 	window->draw(t->getRight());
 	window->draw(t->getDown());
+	
+	
 }
 
 void DomEngine::input()
@@ -76,7 +88,59 @@ void DomEngine::input()
 		case sf::Event::KeyPressed:
 			if (this->ev.key.code == sf::Keyboard::Escape)
 				this->window->close();
+			
+
+			else if (this->ev.key.code == sf::Keyboard::Space){
+				sac.at(0)->tourner();
+			}
 			break;
+		
+		case sf::Event::MouseButtonPressed:
+			if (this->ev.mouseButton.button == sf::Mouse::Left){
+				Vector2f mouse = window->mapPixelToCoords(Mouse::getPosition(*window));
+				for (size_t i = 0; i < tabEmplacement.size(); i++) {
+					EmplacementVide e = tabEmplacement.at(i);
+					FloatRect bounds=e.getShape().getGlobalBounds();
+					if (bounds.contains(mouse)){
+						// si verification ok:
+
+						// on place la tuile a la place choisi
+						sac.at(0)->setPosition(e.getShape().getPosition());
+						plateau.push_back(sac.at(0));
+						tabEmplacement.erase(tabEmplacement.begin() + i);
+					}
+				}
+				// on place les nouveaux emplacements vides 
+
+
+				for (auto & f : tabEmplacement) {
+					EmplacementVide *a = new EmplacementVide(Vector2f(sac.at(0)->getPosition().x,sac.at(0)->getPosition().y+100));
+					EmplacementVide *b = new EmplacementVide(Vector2f(sac.at(0)->getPosition().x,sac.at(0)->getPosition().y-100));
+					EmplacementVide *c = new EmplacementVide(Vector2f(sac.at(0)->getPosition().x+100,sac.at(0)->getPosition().y));
+					EmplacementVide *d = new EmplacementVide(Vector2f(sac.at(0)->getPosition().x-100,sac.at(0)->getPosition().y));
+					cout<<tabEmplacement.size()<<endl;
+					if (!(a->getShape().getGlobalBounds().intersects(f.getShape().getGlobalBounds()))) {
+						tabEmplacement.push_back(*a);
+					}
+					else delete a;
+					if (!(b->getShape().getGlobalBounds().intersects(f.getShape().getGlobalBounds()))) {
+						tabEmplacement.push_back(*b);
+					}
+					else delete b;
+					if (!(c->getShape().getGlobalBounds().intersects(f.getShape().getGlobalBounds()))) {
+						tabEmplacement.push_back(*c);
+					}
+					else delete c;
+					if (!(d->getShape().getGlobalBounds().intersects(f.getShape().getGlobalBounds()))) {
+						tabEmplacement.push_back(*d);
+					}
+					else delete d; 
+
+				}
+				sac.erase(sac.begin());
+			
+		 
+			}
 		}
 	}
 }
@@ -89,14 +153,18 @@ void DomEngine::update()
 void DomEngine::draw()
 {
     window->clear();
+
 	window->draw(wall);
-	drawTuile(tuileDeDepart);
-	cout<<to_string(currentTuile->getPosition().x)<<endl;
-	cout<<to_string(currentTuile->getPosition().y)<<endl;
-	drawTuile(currentTuile);
+	// drawTuile(tuileDeDepart);
+	drawTuile(sac.at(0));
+	for (auto & e : tabEmplacement) {
+    	window->draw(e.getShape());
+  	}
 	
-
-
+	for (auto & p : plateau) {
+    	drawTuile(p);
+  	}
+	
     window->display();
 }
 

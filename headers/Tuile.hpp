@@ -24,11 +24,18 @@ class Tuile{
         Text top;
         Text left;
         Text right;
-        Text down;        
+        Text down;     
+
+        Tuile* nord;
+        Tuile* ouest;
+        Tuile* est;
+        Tuile* sud;
+
         
     public:
         Tuile(vector<int> h,vector<int> d,vector<int> b,vector<int> g, Vector2f pos);
         Tuile(Tuile &t);
+        Tuile();
         virtual ~Tuile();
         vector<int> getHaut() ;
         vector<int> getDroite();
@@ -42,6 +49,12 @@ class Tuile{
         Text getRight();
         Text getDown();
 
+        void setFont();
+        void setTop();
+        void setLeft();
+        void setRight();
+        void setDown();
+
         Vector2f getPosition();
 
         void setTuileString(vector<int> v,Text* t);
@@ -50,6 +63,8 @@ class Tuile{
         void setD(vector<int> t);
         void setB(vector<int> t);
         void setG(vector<int> t);
+
+        Tuile* getNord();
 
         void setPosition(Vector2f pos);
 
