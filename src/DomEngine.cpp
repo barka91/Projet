@@ -116,6 +116,11 @@ void DomEngine::racks(Tuile* t)
 	verification(d);
 }
 
+void DomEngine::repiocher()
+{
+	sac.push_back(sac.at(0));
+}
+
 void DomEngine::drawTuile(Tuile* t)
 {
 	window->draw(t->getSprite());
@@ -123,8 +128,6 @@ void DomEngine::drawTuile(Tuile* t)
 	window->draw(t->getLeft());
 	window->draw(t->getRight());
 	window->draw(t->getDown());
-	
-	
 }
 
 void DomEngine::input()
@@ -143,9 +146,11 @@ void DomEngine::input()
 				this->window->close();
 			
 
-			else if (this->ev.key.code == sf::Keyboard::Space){
+			if (this->ev.key.code == sf::Keyboard::Space){
 				sac.at(0)->tourner();
 			}
+
+
 			break;
 		
 		case sf::Event::MouseButtonPressed:

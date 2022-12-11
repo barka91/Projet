@@ -13,8 +13,9 @@ using namespace std;
 using namespace sf;
 
 class DomEngine{
-    const int SCRWIDTH = 800;
-    const int SCRHEIGHT = 600;
+    const int SCRWIDTH = sf::VideoMode::getDesktopMode().width;
+
+    const int SCRHEIGHT = sf::VideoMode::getDesktopMode().height;
     private:
         // window
         RenderWindow* window;
@@ -23,6 +24,9 @@ class DomEngine{
 
         // graphic
         RectangleShape wall;
+        RectangleShape tournerBtn;
+        RectangleShape repiocheBtn;
+        
 
         // system
         int nbJoueurs;
@@ -52,6 +56,7 @@ class DomEngine{
         bool isBonnePlace(EmplacementVide* ev, Tuile* t);
         bool isEqual(vector<int> v1,vector<int> v2);
         void racks(Tuile* t);
+        void repiocher();
 
         
 };
