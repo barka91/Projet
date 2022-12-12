@@ -108,17 +108,20 @@ void DomEngine::racks(Tuile* t)
 	// emplacement a droite de la tuile place
 	EmplacementVide* c = new EmplacementVide{Vector2f(t->getPosition().x+100,t->getPosition().y)};
 	c->setGauche(t->getDroite());
+	reverse(c->getGauche().begin(),c->getGauche().end());
 	verification(c);
 
 	// emplacement a gauche de la tuile place
 	EmplacementVide* d = new EmplacementVide{Vector2f(t->getPosition().x-100,t->getPosition().y)};
-	d->setDroite(t->getGauche());
+	reverse(d->getGauche().begin(),d->getGauche().end());
 	verification(d);
 }
 
 void DomEngine::repiocher()
 {
 	sac.push_back(sac.at(0));
+	sac.erase(sac.begin());	
+
 }
 
 void DomEngine::drawTuile(Tuile* t)
@@ -149,7 +152,14 @@ void DomEngine::input()
 			if (this->ev.key.code == sf::Keyboard::Space){
 				sac.at(0)->tourner();
 			}
+			
+			if (this->ev.key.code == sf::Keyboard::Space){
+				sac.at(0)->tourner();
+			}
 
+			if (this->ev.key.code == sf::Keyboard::P){
+				repiocher();
+			}
 
 			break;
 		
