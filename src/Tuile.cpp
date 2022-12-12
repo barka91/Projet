@@ -147,6 +147,7 @@ void Tuile::tourner(){
     setTuileString(bas,&down);
     setGauche( tmpB );
     setTuileString(gauche,&left);
+    cout<<getBas().at(0)<<getBas().at(1)<<getBas().at(2)<<endl;
 }
 
 ostream& operator<<( ostream& out , Tuile &t){

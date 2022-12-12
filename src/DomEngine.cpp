@@ -31,7 +31,7 @@ void DomEngine::startTheGame() {
         // cout<<"................."<<tabCote[i]<<endl;
     }
 
-    for(unsigned int i =0; i<20 ; i++){
+    for(unsigned int i =0; i<10 ; i++){
 		sac.push_back( new Tuile{tabCote[rand()%15],tabCote[rand()%15],tabCote[rand()%15],tabCote[rand()%15],sf::Vector2f(100,100)} );
 	}
     
@@ -77,20 +77,46 @@ void DomEngine::verification(EmplacementVide* ev){
 }
 
 bool DomEngine::isBonnePlace(EmplacementVide *ev, Tuile *t){
-    if (ev->getHaut().size() == 3 && !(isEqual(ev->getHaut(),t->getHaut()))) return false;
-    if (ev->getDroite().size() == 3 && !(isEqual(ev->getDroite(),t->getDroite()))) return false;
-    if (ev->getGauche().size() == 3 && !(isEqual(ev->getGauche(),t->getGauche()))) return false;
-    if (ev->getBas().size() == 3 && !(isEqual(ev->getBas(),t->getBas()))) return false;
+	cout<<"ouhouuuuh"<<endl;
+    if ( t->getHaut().size() == 3 && ev->getHaut().size() == 3 && !(isEqualHB(ev->getHaut(),t->getHaut()))) {
+		cout<<"hautttt"<<endl;
+		return false;
+	}
+		
+		
+    if (ev->getDroite().size() == 3 && t->getDroite().size() == 3 && !(isEqualHB(ev->getDroite(),t->getDroite()))) {
+		cout<<"droittttt"<<endl;
+
+		return false;
+	}
+    if (ev->getGauche().size() == 3 && t->getGauche().size() == 3 && !(isEqualGD(ev->getGauche(),t->getGauche()))) {
+		cout<<"gaucheee"<<endl;
+
+		return false;
+	}
+    if (ev->getBas().size() == 3 && t->getBas().size() == 3 && !(isEqualGD(ev->getBas(),t->getBas()))) {
+		cout<<"baasss"<<endl;
+
+		return false;
+	}
 	return true;
     
 }
 
-bool DomEngine::isEqual(vector<int> v1, vector<int> v2)
+bool DomEngine::isEqualHB(vector<int> v1, vector<int> v2)
 {
-	// cout<<v1.at(0)<<v1.at(1)<<v1.at(2)<<" "<<v2.at(0)<<v2.at(1)<<v2.at(2)<<endl;
+	cout<<v1.at(0)<<v1.at(1)<<v1.at(2)<<" "<<v2.at(0)<<v2.at(1)<<v2.at(2)<<endl;
 	cout<<v1.size()<<" big brr "<<v2.size()<<endl;
 
-    return ( equal(v1.begin(), v1.end(), v2.begin()));
+    return ( v1.at(0)==v2.at(0) && v1.at(1)==v2.at(1) && v1.at(2)==v2.at(2));
+}
+
+bool DomEngine::isEqualGD(vector<int> v1, vector<int> v2)
+{
+	cout<<v1.at(0)<<v1.at(1  )<<v1.at(2)<<" "<<v2.at(0)<<v2.at(1)<<v2.at(2)<<endl;
+	cout<<v1.size()<<" big brr "<<v2.size()<<endl;
+
+    return ( v1.at(0)==v2.at(2) && v1.at(1)==v2.at(1) && v1.at(1)==v2.at(2));
 }
 
 void DomEngine::racks(Tuile* t)
@@ -119,7 +145,6 @@ void DomEngine::racks(Tuile* t)
 
 void DomEngine::repiocher()
 {
-	sac.push_back(sac.at(0));
 	sac.erase(sac.begin());	
 
 }
@@ -152,10 +177,6 @@ void DomEngine::input()
 			if (this->ev.key.code == sf::Keyboard::Space){
 				sac.at(0)->tourner();
 			}
-			
-			if (this->ev.key.code == sf::Keyboard::Space){
-				sac.at(0)->tourner();
-			}
 
 			if (this->ev.key.code == sf::Keyboard::P){
 				repiocher();
@@ -177,7 +198,7 @@ void DomEngine::input()
 							sac.at(0)->setPosition(e->getShape().getPosition());
 							plateau.push_back(sac.at(0));
 							tabEmplacement.erase(tabEmplacement.begin() + i);
-							// // on place les nouveaux emplacements vides 
+							// on place les nouveaux emplacements vides 
 							racks(sac.at(0));
 							sac.erase(sac.begin());	
 						}

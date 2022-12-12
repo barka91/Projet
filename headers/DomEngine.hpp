@@ -54,7 +54,8 @@ class DomEngine{
         void startTheGame();
         void verification(EmplacementVide* ev);
         bool isBonnePlace(EmplacementVide* ev, Tuile* t);
-        bool isEqual(vector<int> v1,vector<int> v2);
+        bool isEqualHB(vector<int> v1,vector<int> v2);
+        bool isEqualGD(vector<int> v1,vector<int> v2);
         void racks(Tuile* t);
         void repiocher();
 
