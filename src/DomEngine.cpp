@@ -1,5 +1,6 @@
 #include "DomEngine.hpp"
 #include <iostream>
+#include <algorithm>
 
 vector<int> h = {1,2,3}, d = {4,5,6}, b = {7,8,9}, g = {0,1,2};
 
@@ -84,7 +85,7 @@ bool DomEngine::isBonnePlace(EmplacementVide *ev, Tuile *t){
 	}
 		
 		
-    if (ev->getDroite().size() == 3 && t->getDroite().size() == 3 && !(isEqualHB(ev->getDroite(),t->getDroite()))) {
+    if (ev->getDroite().size() == 3 && t->getDroite().size() == 3 && !(isEqualGD(ev->getDroite(),t->getDroite()))) {
 		cout<<"droittttt"<<endl;
 
 		return false;
@@ -94,7 +95,7 @@ bool DomEngine::isBonnePlace(EmplacementVide *ev, Tuile *t){
 
 		return false;
 	}
-    if (ev->getBas().size() == 3 && t->getBas().size() == 3 && !(isEqualGD(ev->getBas(),t->getBas()))) {
+    if (ev->getBas().size() == 3 && t->getBas().size() == 3 && !(isEqualHB(ev->getBas(),t->getBas()))) {
 		cout<<"baasss"<<endl;
 
 		return false;
@@ -119,6 +120,13 @@ bool DomEngine::isEqualGD(vector<int> v1, vector<int> v2)
     return ( v1.at(0)==v2.at(2) && v1.at(1)==v2.at(1) && v1.at(1)==v2.at(2));
 }
 
+void DomEngine::reverse(vector<int>* v)
+{
+	int a = v->at(0);
+	v->at(0)=v->at(2);
+	v->at(2)=a;
+}
+
 void DomEngine::racks(Tuile* t)
 {
 	// emplacement en dessous de la tuile place
@@ -134,13 +142,18 @@ void DomEngine::racks(Tuile* t)
 	// emplacement a droite de la tuile place
 	EmplacementVide* c = new EmplacementVide{Vector2f(t->getPosition().x+100,t->getPosition().y)};
 	c->setGauche(t->getDroite());
-	reverse(c->getGauche().begin(),c->getGauche().end());
+	cout<<c->getVector(c->getGauche())<<"aaaaaah"<<endl;
+	c->reverseGauche();
+	cout<<c->getVector(c->getGauche())<<"beeeeeeeh"<<endl;
 	verification(c);
 
 	// emplacement a gauche de la tuile place
 	EmplacementVide* d = new EmplacementVide{Vector2f(t->getPosition().x-100,t->getPosition().y)};
-	reverse(d->getGauche().begin(),d->getGauche().end());
+	d->setDroite(t->getGauche());
+	d->reverseDroite();
 	verification(d);
+	cout<<c->getVector(c->getGauche())<<"aaaaajefeiufieah"<<endl;
+
 }
 
 void DomEngine::repiocher()
@@ -219,6 +232,19 @@ void DomEngine::input()
 				// sac.erase(sac.begin());
 			
 		 
+			}
+
+			if (this->ev.mouseButton.button == sf::Mouse::Right){
+				Vector2f mouse = window->mapPixelToCoords(Mouse::getPosition(*window));
+				for (size_t i = 0; i < tabEmplacement.size(); i++) {
+					EmplacementVide* e = tabEmplacement.at(i);
+					FloatRect bounds=e->getShape().getGlobalBounds();
+					if (bounds.contains(mouse)){
+						cout<<*e<<endl;
+						break;
+					}
+
+				}
 			}
 		}
 	}

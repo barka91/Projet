@@ -49,11 +49,8 @@ class Tuile{
         Text getRight();
         Text getDown();
 
-        void setFont();
-        void setTop();
-        void setLeft();
-        void setRight();
-        void setDown();
+        void setupText(Text *textItem, const Font &font, const vector<int> v, int size, Color colour,float angle) ;
+        
 
         Vector2f getPosition();
 

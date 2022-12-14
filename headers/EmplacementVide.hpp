@@ -33,11 +33,16 @@ class EmplacementVide{
         void setDroite(vector<int> t);
         void setBas(vector<int> t);
         void setGauche(vector<int> t);
+        void reverseDroite();
+        void reverseGauche();
+
 
         void mix(EmplacementVide* e);
 
         RectangleShape getShape();
+        string getVector(vector<int> v);
         
+
     friend ostream& operator <<(ostream& out, EmplacementVide &e) ;        
 };
 #endif
