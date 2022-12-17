@@ -7,7 +7,7 @@ project(projet)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(projet src/main.cpp headers/Joueur.hpp src/Joueur.cpp headers/Tuile.hpp src/Tuile.cpp headers/DomEngine.hpp src/DomEngine.cpp headers/EmplacementVide.hpp src/EmplacementVide.cpp)
+add_executable(projet src/main.cpp src/Wall.cpp headers/Wall.hpp headers/Joueur.hpp src/Joueur.cpp headers/Tuile.hpp src/Tuile.cpp headers/DomEngine.hpp src/DomEngine.cpp src/Input.cpp headers/EmplacementVide.hpp src/EmplacementVide.cpp)
 
 include_directories(headers /usr/include c:/SFML/include)
 

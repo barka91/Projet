@@ -22,8 +22,12 @@ class Tuile{
         RectangleShape sprite;
         Font font;
         Text top;
-        Text left;
-        Text right;
+        Text left0;
+        Text left1;
+        Text left2;
+        Text right0;
+        Text right1;
+        Text right2;
         Text down;     
 
         Tuile* nord;
@@ -45,16 +49,22 @@ class Tuile{
         RectangleShape getSprite();
         Font getFont();
         Text getTop();
-        Text getLeft();
-        Text getRight();
+        Text getLeft0();
+        Text getLeft1();
+        Text getLeft2();
+        Text getRight0();
+        Text getRight1();
+        Text getRight2();
         Text getDown();
 
-        void setupText(Text *textItem, const Font &font, const vector<int> v, int size, Color colour,float angle) ;
+        void setupTextV(Text *textItem, const Font &font, const vector<int> v, int size, Color colour,float angle) ;
+        void setupTextS(Text *textItem, const Font &font, const string s, int size, Color colour,float angle) ;
         
 
         Vector2f getPosition();
 
         void setTuileString(vector<int> v,Text* t);
+        void setTuileGD(vector<int> v,string cote);
 
         void setHaut(vector<int> t);
         void setDroite(vector<int> t);

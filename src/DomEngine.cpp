@@ -1,13 +1,15 @@
 #include "DomEngine.hpp"
-#include <iostream>
-#include <algorithm>
-
-vector<int> h = {1,2,3}, d = {4,5,6}, b = {7,8,9}, g = {0,1,2};
 
 DomEngine::DomEngine(int nj):nbJoueurs{nj}{
     this->videoMode.height = SCRHEIGHT;
 	this->videoMode.width = SCRWIDTH;
 	this->window = new sf::RenderWindow(this->videoMode, "Dominos Carres", sf::Style::Default);
+	mainFont.loadFromFile("assets/fonts/roboto.ttf");
+	setupText(&gameOverText, mainFont, "GAME OVER", 72, Color::Yellow);
+	FloatRect gameOverTextBounds = gameOverText.getLocalBounds();
+	gameOverText.setPosition(Vector2f(SCRWIDTH/2.0f,SCRHEIGHT/2.0f));
+	gameOverText.setOutlineColor(Color::Black);
+	gameOverText.setOutlineThickness(2);
 
 	startTheGame();
 }
@@ -16,10 +18,18 @@ DomEngine::~DomEngine(){
     delete this->window;
 }
 
+void DomEngine::setupText(Text *textItem, const Font &font, const String &value, int size, Color colour) {
+  textItem->setFont(font);
+  textItem->setString(value);
+  textItem->setCharacterSize(size);
+  textItem->setFillColor(colour);
+}
+
 void DomEngine::startTheGame() {
 	// initialisation des joueurs
-	for(int i =0; i < nbJoueurs ; i++)
-        tabJoueurs.push_back(Joueur{i});
+	for(int i =0; i < nbJoueurs ; i++) tabJoueurs.push_back(new Joueur{i});
+
+	tabJoueurs.at(0)->setCurrent(true);
 
 	// initialisation de la pioche
 	for (int i = 0; i < 15; i++){
@@ -47,15 +57,18 @@ void DomEngine::startTheGame() {
 
 	// initialisation de laffichage de la 1er tuile de la pioche
 	// currentTuile=sac.at(0);
-
-	 
+	
 
 	//  initialisation du decor
 	wall.setFillColor(Color::Green);
-	wall.setSize(Vector2f(200.0f,200.0f));
-	
-	
-	// wall.setPosition(position);
+	wall.setSize(Vector2f(200.0f,SCRHEIGHT));
+
+	wallSection.emplace_back(Wall(Vector2f(200.f, 0), Vector2f(SCRWIDTH-200.0f,10.0f)));
+	wallSection.emplace_back(Wall(Vector2f(200.f, 0), Vector2f(10.0f,SCRHEIGHT)));
+	wallSection.emplace_back(Wall(Vector2f(200.f, SCRHEIGHT-30), Vector2f(SCRWIDTH-200.0f,10.0f)));
+	wallSection.emplace_back(Wall(Vector2f(SCRWIDTH,SCRHEIGHT ), Vector2f(10.0f,SCRHEIGHT)));
+
+  	currentGameState = GameState::RUNNING;
 
 
 }
@@ -85,12 +98,12 @@ bool DomEngine::isBonnePlace(EmplacementVide *ev, Tuile *t){
 	}
 		
 		
-    if (ev->getDroite().size() == 3 && t->getDroite().size() == 3 && !(isEqualGD(ev->getDroite(),t->getDroite()))) {
+    if (ev->getDroite().size() == 3 && t->getDroite().size() == 3 && !(isEqualHB(ev->getDroite(),t->getDroite()))) {
 		cout<<"droittttt"<<endl;
 
 		return false;
 	}
-    if (ev->getGauche().size() == 3 && t->getGauche().size() == 3 && !(isEqualGD(ev->getGauche(),t->getGauche()))) {
+    if (ev->getGauche().size() == 3 && t->getGauche().size() == 3 && !(isEqualHB(ev->getGauche(),t->getGauche()))) {
 		cout<<"gaucheee"<<endl;
 
 		return false;
@@ -143,118 +156,71 @@ void DomEngine::racks(Tuile* t)
 	EmplacementVide* c = new EmplacementVide{Vector2f(t->getPosition().x+100,t->getPosition().y)};
 	c->setGauche(t->getDroite());
 	cout<<c->getVector(c->getGauche())<<"aaaaaah"<<endl;
-	c->reverseGauche();
+	// c->reverseGauche();
 	cout<<c->getVector(c->getGauche())<<"beeeeeeeh"<<endl;
 	verification(c);
 
 	// emplacement a gauche de la tuile place
 	EmplacementVide* d = new EmplacementVide{Vector2f(t->getPosition().x-100,t->getPosition().y)};
 	d->setDroite(t->getGauche());
-	d->reverseDroite();
+	// d->reverseDroite();
 	verification(d);
 	cout<<c->getVector(c->getGauche())<<"aaaaajefeiufieah"<<endl;
 
 }
 
-void DomEngine::repiocher()
-{
-	sac.erase(sac.begin());	
+void DomEngine::defausser()
+{	
+	if (sac.size()>0)
+	{
+		sac.erase(sac.begin());	
+		joueurSuivant();
+	}
+	
+	
+}
 
+void DomEngine::joueurSuivant()
+{
+	for (int i = 0; i < tabJoueurs.size(); i++){
+		if( tabJoueurs.at(i)->getCurrent()){
+			if (i+1 == tabJoueurs.size()){
+				tabJoueurs.at(i)->setCurrent(false);
+				tabJoueurs.at(0)->setCurrent(true);
+				cout<<"allo wsh jsuis le dernier la  "<<endl;
+				return ;
+			}
+			else {
+				cout<<"allo wsh "<<endl;
+				tabJoueurs.at(i)->setCurrent(false);
+				tabJoueurs.at(i+1)->setCurrent(true);
+				break;
+			}
+			
+			
+		}
+  	}
 }
 
 void DomEngine::drawTuile(Tuile* t)
 {
 	window->draw(t->getSprite());
 	window->draw(t->getTop());
-	window->draw(t->getLeft());
-	window->draw(t->getRight());
+	window->draw(t->getLeft0());
+	window->draw(t->getLeft1());
+	window->draw(t->getLeft2());
+	window->draw(t->getRight0());
+	window->draw(t->getRight1());
+	window->draw(t->getRight2());
 	window->draw(t->getDown());
+	
 }
-
-void DomEngine::input()
-{
-    //Event polling
-	while (this->window->pollEvent(this->ev))
-    {
-		switch (this->ev.type)
-		{
-		case sf::Event::Closed:
-			this->window->close();
-			break;
-
-		case sf::Event::KeyPressed:
-			if (this->ev.key.code == sf::Keyboard::Escape)
-				this->window->close();
-			
-
-			if (this->ev.key.code == sf::Keyboard::Space){
-				sac.at(0)->tourner();
-			}
-
-			if (this->ev.key.code == sf::Keyboard::P){
-				repiocher();
-			}
-
-			break;
-		
-		case sf::Event::MouseButtonPressed:
-			if (this->ev.mouseButton.button == sf::Mouse::Left){
-				Vector2f mouse = window->mapPixelToCoords(Mouse::getPosition(*window));
-				for (size_t i = 0; i < tabEmplacement.size(); i++) {
-					EmplacementVide* e = tabEmplacement.at(i);
-					FloatRect bounds=e->getShape().getGlobalBounds();
-					if (bounds.contains(mouse)){
-						// si verification ok:
-						if (isBonnePlace(e,sac.at(0))){
-							// on place la tuile a la place choisi
-							cout<<"oue c'est la bonne place mon reuf gg"<<endl;
-							sac.at(0)->setPosition(e->getShape().getPosition());
-							plateau.push_back(sac.at(0));
-							tabEmplacement.erase(tabEmplacement.begin() + i);
-							// on place les nouveaux emplacements vides 
-							racks(sac.at(0));
-							sac.erase(sac.begin());	
-						}
-						else
-						{
-							cout<<"t'es bete ou quoi "<<endl;
-							
-						}
-						break;
-						
-					}
-				}
-
-				// on place les nouveaux emplacements vides 
-				// racks(sac.at(0));
-				
-				
-				// sac.erase(sac.begin());
-			
-		 
-			}
-
-			if (this->ev.mouseButton.button == sf::Mouse::Right){
-				Vector2f mouse = window->mapPixelToCoords(Mouse::getPosition(*window));
-				for (size_t i = 0; i < tabEmplacement.size(); i++) {
-					EmplacementVide* e = tabEmplacement.at(i);
-					FloatRect bounds=e->getShape().getGlobalBounds();
-					if (bounds.contains(mouse)){
-						cout<<*e<<endl;
-						break;
-					}
-
-				}
-			}
-		}
-	}
-}
-
-
 
 void DomEngine::update()
 {
-    input();
+	if (sac.size()==0){
+		currentGameState = GameState::GAMEOVER;
+	}
 }
 
 void DomEngine::draw()
@@ -263,7 +229,11 @@ void DomEngine::draw()
 
 	window->draw(wall);
 	// drawTuile(tuileDeDepart);
-	drawTuile(sac.at(0));
+	if (sac.size()>0)
+	{
+		drawTuile(sac.at(0));
+	}
+
 	for (auto & e : tabEmplacement) {
     	window->draw(e->getShape());
   	}
@@ -271,7 +241,22 @@ void DomEngine::draw()
 	for (auto & p : plateau) {
     	drawTuile(p);
   	}
-	
+
+	for (auto & w : wallSection) {
+    	window->draw(w.getShape());
+  	}
+
+	for (auto & j : tabJoueurs) {
+    	window->draw(j->getJText());
+    	window->draw(j->getJScore());
+  	}
+
+
+	// Draw GameOver
+	if (currentGameState == GameState::GAMEOVER) {
+		window->draw(gameOverText);
+	}
+
     window->display();
 }
 
@@ -279,11 +264,16 @@ void DomEngine::run()
 {
 	while (window->isOpen())
 	{
+		if ( currentGameState == GameState::GAMEOVER) {
+			draw();
+			sleep(milliseconds(2)); // sleep so we don't peg the CPU
+			continue;
+		}
 		// input
 		input();
 
-		//Update
-		// update();
+		// update
+		update();
 
 		//Render
 		draw();

@@ -4,9 +4,11 @@
 #include<iostream>
 #include<string>
 #include<vector>
+#include <algorithm>
 #include "Tuile.hpp"
 #include "Joueur.hpp"
 #include "EmplacementVide.hpp"
+#include "Wall.hpp"
 
 
 using namespace std;
@@ -23,22 +25,32 @@ class DomEngine{
         Event ev;
 
         // graphic
+        Font mainFont;
         RectangleShape wall;
         RectangleShape tournerBtn;
         RectangleShape repiocheBtn;
+        vector<Wall> wallSection;
+        Text gameOverText;
+
+
         
 
         // system
         int nbJoueurs;
         Tuile* tuileDeDepart;
         Tuile* currentTuile;
-        vector<Joueur> tabJoueurs;
+        vector<Joueur*> tabJoueurs;
         vector<Tuile*> sac;
         vector<vector<int>> tabCote ;
         vector<EmplacementVide*> tabEmplacement;
         vector<Tuile*> plateau;
 
+        int currentGameState;
+
+
     public:
+        enum GameState { RUNNING, GAMEOVER };
+
         // constructeur et destructeur
         DomEngine(int nj);
         virtual ~DomEngine();
@@ -51,6 +63,7 @@ class DomEngine{
         void draw();
         void run();
 
+        void setupText(Text *textItem, const Font &font, const String &value, int size, Color colour);
         void startTheGame();
         void verification(EmplacementVide* ev);
         bool isBonnePlace(EmplacementVide* ev, Tuile* t);
@@ -58,7 +71,8 @@ class DomEngine{
         bool isEqualGD(vector<int> v1,vector<int> v2);
         void reverse(vector<int>* v);
         void racks(Tuile* t);
-        void repiocher();
+        void defausser();
+        void joueurSuivant();
 
         
 };

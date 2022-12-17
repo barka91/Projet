@@ -3,7 +3,23 @@
 
 using namespace std;
 
-Joueur::Joueur(int i):id{i}, point{0}{}
+Joueur::Joueur(int i):id{i}, point{0}, current{false}{
+     
+	font.loadFromFile("assets/fonts/roboto.ttf");
+    JText.setFont(font);
+    string name = "Joueur "+to_string(id);
+    JText.setString(name);
+    JText.setFillColor(Color::White);
+    JText.setCharacterSize(25);
+    JText.setPosition(Vector2f(10.0f,200.0f + 70.f * i));
+
+    JScore.setFont(font);
+    JScore.setString(to_string(point));
+    JScore.setFillColor(Color::White);
+    JScore.setCharacterSize(25);
+    JScore.setPosition(Vector2f(150.0f,200.0f + 70.f * i));
+    cout<<"construction de joueur "<<*this;
+}
 
 Joueur::~Joueur(){
     cout<<"destruction de joueur "<<*this;
@@ -20,5 +36,32 @@ void Joueur::setPoint(int p){
     point += p;
 }
 
+void Joueur::setCurrent(bool c)
+{   
+    current = c;
+    if (c)
+    {
+        JText.setFillColor(Color::Red);
+        JScore.setFillColor(Color::Red);
+    }
+    else
+    {
+        JText.setFillColor(Color::White);
+        JScore.setFillColor(Color::White);
+    }
+
+}
+
+bool Joueur::getCurrent(){
+    return current;
+}
+
+Text Joueur::getJText(){
+    return JText;
+}
+
+Text Joueur::getJScore(){
+    return JScore;
+}
 
 
