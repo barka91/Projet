@@ -44,8 +44,9 @@ void DomEngine::input()
 							// on place les nouveaux emplacements vides 
 							racks(sac.at(0));
 							sac.erase(sac.begin());
-							// on change de joueur 
-							joueurSuivant();
+			
+							// on attibue les points au joueur et on change de joueur 
+							joueurSuivant(e->getPoints());
 						}
 						else
 						{

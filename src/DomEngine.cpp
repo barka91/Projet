@@ -174,16 +174,17 @@ void DomEngine::defausser()
 	if (sac.size()>0)
 	{
 		sac.erase(sac.begin());	
-		joueurSuivant();
+		joueurSuivant(0);
 	}
 	
 	
 }
 
-void DomEngine::joueurSuivant()
+void DomEngine::joueurSuivant(int pts)
 {
 	for (int i = 0; i < tabJoueurs.size(); i++){
 		if( tabJoueurs.at(i)->getCurrent()){
+			tabJoueurs.at(i)->setPoint(pts);
 			if (i+1 == tabJoueurs.size()){
 				tabJoueurs.at(i)->setCurrent(false);
 				tabJoueurs.at(0)->setCurrent(true);
@@ -196,8 +197,6 @@ void DomEngine::joueurSuivant()
 				tabJoueurs.at(i+1)->setCurrent(true);
 				break;
 			}
-			
-			
 		}
   	}
 }
@@ -213,7 +212,6 @@ void DomEngine::drawTuile(Tuile* t)
 	window->draw(t->getRight1());
 	window->draw(t->getRight2());
 	window->draw(t->getDown());
-	
 }
 
 void DomEngine::update()

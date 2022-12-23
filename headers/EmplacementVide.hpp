@@ -18,9 +18,6 @@ class EmplacementVide{
         vector<int> bas;
         vector<int> gauche;
 
-
-
-
   
     public:
         EmplacementVide(Vector2f pos);
@@ -38,6 +35,7 @@ class EmplacementVide{
 
 
         void mix(EmplacementVide* e);
+        int getPoints();
 
         RectangleShape getShape();
         string getVector(vector<int> v);

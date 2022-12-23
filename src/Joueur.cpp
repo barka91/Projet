@@ -34,6 +34,8 @@ int Joueur::getId(){return id;}
 
 void Joueur::setPoint(int p){
     point += p;
+    JScore.setString(to_string(point));
+
 }
 
 void Joueur::setCurrent(bool c)

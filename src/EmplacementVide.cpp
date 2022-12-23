@@ -61,7 +61,15 @@ void EmplacementVide::mix(EmplacementVide *ev){
     if (this->getBas().empty()) this->setBas(ev->getBas());
 }
 
-
+int EmplacementVide::getPoints()
+{
+    int res=0;
+    if(!(this->getHaut().empty())) res++;
+    if(!(this->getDroite().empty())) res++;
+    if(!(this->getGauche().empty())) res++;
+    if(!(this->getBas().empty())) res++;
+    return res;
+}
 
 ostream &operator<<(ostream &out, EmplacementVide &e)
 {
