@@ -4,14 +4,14 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include "Emplacement.hpp"
 
 using namespace std;
 using namespace sf;
 
-class EmplacementVide{
+class EmplacementVide : public Emplacement{
  
     private:
-        RectangleShape sprite;
 
         vector<int> haut;
         vector<int> droite;
@@ -36,8 +36,7 @@ class EmplacementVide{
 
         void mix(EmplacementVide* e);
         int getPoints();
-
-        RectangleShape getShape();
+        
         string getVector(vector<int> v);
         
 

@@ -1,19 +1,9 @@
-#include "EmplacementVide.hpp"
+#include "Domino/EmplacementVide.hpp"
 
-EmplacementVide::EmplacementVide(Vector2f pos)
-{
-    sprite.setFillColor(Color::Blue);
-    sprite.setSize(Vector2f(100.f,100.f));
-	auto bounds = sprite.getLocalBounds();
-	sprite.setOrigin( bounds.width / 2.f, bounds.height / 2.f );
-    sprite.setPosition(pos);
-    
+EmplacementVide::EmplacementVide(Vector2f pos):Emplacement(pos){
+ 
 }
 
-RectangleShape EmplacementVide::getShape()
-{
-    return sprite;
-}
 
 string EmplacementVide::getVector(vector<int> v)
 {

@@ -1,29 +1,14 @@
-#include "DomEngine.hpp"
+#include "Domino/DomEngine.hpp"
 
-DomEngine::DomEngine(int nj):nbJoueurs{nj}{
-    this->videoMode.height = SCRHEIGHT;
-	this->videoMode.width = SCRWIDTH;
-	this->window = new sf::RenderWindow(this->videoMode, "Dominos Carres", sf::Style::Default);
-	mainFont.loadFromFile("assets/fonts/roboto.ttf");
-	setupText(&gameOverText, mainFont, "GAME OVER", 72, Color::Yellow);
-	FloatRect gameOverTextBounds = gameOverText.getLocalBounds();
-	gameOverText.setPosition(Vector2f(SCRWIDTH/2.0f,SCRHEIGHT/2.0f));
-	gameOverText.setOutlineColor(Color::Black);
-	gameOverText.setOutlineThickness(2);
-
+DomEngine::DomEngine(int nj):Engine(nj,"Dominos Carrees"){
 	startTheGame();
 }
 
 DomEngine::~DomEngine(){
-    delete this->window;
+    
 }
 
-void DomEngine::setupText(Text *textItem, const Font &font, const String &value, int size, Color colour) {
-  textItem->setFont(font);
-  textItem->setString(value);
-  textItem->setCharacterSize(size);
-  textItem->setFillColor(colour);
-}
+
 
 void DomEngine::startTheGame() {
 	// initialisation des joueurs

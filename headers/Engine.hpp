@@ -1,10 +1,11 @@
-#ifndef _TREXENGINE
-#define _TREXENGINE
+#ifndef _ENGINE
+#define _ENGINE
 #include <SFML/Graphics.hpp>
 #include<iostream>
 #include<string>
 #include<vector>
 #include <algorithm>
+#include "Wall.hpp"
 #include "Joueur.hpp"
 
 
@@ -12,11 +13,12 @@
 using namespace std;
 using namespace sf;
 
-class DomEngine{
-    const int SCRWIDTH = sf::VideoMode::getDesktopMode().width;
+class Engine{
+    
+    protected:
+        const int SCRWIDTH = sf::VideoMode::getDesktopMode().width;
 
-    const int SCRHEIGHT = sf::VideoMode::getDesktopMode().height;
-    private:
+        const int SCRHEIGHT = sf::VideoMode::getDesktopMode().height;
         // window
         RenderWindow* window;
         VideoMode videoMode;
@@ -24,11 +26,14 @@ class DomEngine{
 
         // graphic
         Font mainFont;
+        RectangleShape wall;
+        vector<Wall> wallSection;
         Text gameOverText;
-       
 
         // system
         int nbJoueurs;
+       
+        vector<Joueur*> tabJoueurs;
 
         int currentGameState;
 
@@ -37,17 +42,17 @@ class DomEngine{
         enum GameState { RUNNING, GAMEOVER };
 
         // constructeur et destructeur
-        TrexEngine(int nj);
-        virtual ~TrexEngine();
+        Engine(int nj,string nom);
+        virtual ~Engine();
 
         // fonctions
-        void drawTuile(Tuile* t);
+        virtual void input()=0;
+        virtual void update()=0;
+        virtual void draw()=0;
+        virtual void run()=0;
 
-        void input();
-        void update();
-        void draw();
-        void run();
-
+        virtual void startTheGame()=0;
+        virtual void joueurSuivant(int pts)=0;
         void setupText(Text *textItem, const Font &font, const String &value, int size, Color colour);
 
         
