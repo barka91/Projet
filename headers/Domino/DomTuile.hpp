@@ -1,17 +1,15 @@
-#ifndef _TUILE
-#define _TUILE
+#ifndef _DOMTUILE
+#define _DOMTUILE
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <vector>
 #include <string>
+#include "Tuile.hpp"
 
 using namespace std;
 using namespace sf;
 
-class Tuile{
-
-    const int SCRWIDTH = 800;
-    const int SCRHEIGHT = 600;
+class DomTuile : public Tuile{
 
     private:
         vector<int> haut;
@@ -19,7 +17,6 @@ class Tuile{
         vector<int> bas;
         vector<int> gauche;
 
-        RectangleShape sprite;
         Font font;
         Text top;
         Text left0;
@@ -30,23 +27,23 @@ class Tuile{
         Text right2;
         Text down;     
 
-        Tuile* nord;
-        Tuile* ouest;
-        Tuile* est;
-        Tuile* sud;
+        DomTuile* nord;
+        DomTuile* ouest;
+        DomTuile* est;
+        DomTuile* sud;
 
         
     public:
-        Tuile(vector<int> h,vector<int> d,vector<int> b,vector<int> g, Vector2f pos);
-        Tuile(Tuile &t);
-        Tuile();
-        virtual ~Tuile();
+        DomTuile(vector<int> h,vector<int> d,vector<int> b,vector<int> g, Vector2f pos);
+        DomTuile(DomTuile &t);
+        DomTuile();
+        virtual ~DomTuile();
         vector<int> getHaut() ;
         vector<int> getDroite();
         vector<int> getBas();
         vector<int> getGauche();
 
-        RectangleShape getSprite();
+
         Font getFont();
         Text getTop();
         Text getLeft0();
@@ -59,24 +56,19 @@ class Tuile{
 
         void setupTextV(Text *textItem, const Font &font, const vector<int> v, int size, Color colour,float angle) ;
         void setupTextS(Text *textItem, const Font &font, const string s, int size, Color colour,float angle) ;
-        
 
-        Vector2f getPosition();
-
-        void setTuileString(vector<int> v,Text* t);
-        void setTuileGD(vector<int> v,string cote);
+        void setDomTuileString(vector<int> v,Text* t);
+        void setDomTuileGD(vector<int> v,string cote);
 
         void setHaut(vector<int> t);
         void setDroite(vector<int> t);
         void setBas(vector<int> t);
         void setGauche(vector<int> t);
 
-        Tuile* getNord();
 
         void setPosition(Vector2f pos);
-
         void tourner();
 
-    friend ostream& operator <<(ostream& out, Tuile &t) ;        
+    friend ostream& operator <<(ostream& out, DomTuile &t) ;        
 };
 #endif

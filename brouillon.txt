@@ -129,3 +129,12 @@ clean :
 
     ------------------------------------------------------------------------
 
+A supprimer : ligneNoire.setFillColor(Color::Black);
+//     ligneNoire.setSize(Vector2f(100.f/3,100.f));
+// 	auto boundsln = ligneNoire.getLocalBounds();
+// 	ligneNoire.setOrigin( boundsln.width / 2.f, boundsln.height / 2.f );
+
+//     ligneBlanche.setFillColor(Color::White);
+//     ligneBlanche.setSize(Vector2f(100.f,100.f/3));
+// 	auto boundslb = ligneBlanche.getLocalBounds();
+// 	ligneBlanche.setOrigin( boundslb.width / 2.f, boundslb.height / 2.f );

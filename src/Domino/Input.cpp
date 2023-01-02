@@ -37,7 +37,7 @@ void DomEngine::input()
 					if (bounds.contains(mouse)){
 						// si verification ok:
 						if (isBonnePlace(e,sac.at(0))){
-							// on place la tuile a la place choisi
+							// on place la DomTuile a la place choisi
 							cout<<"oue c'est la bonne place mon reuf gg"<<endl;
 							sac.at(0)->setPosition(e->getShape().getPosition());
 							plateau.push_back(sac.at(0));

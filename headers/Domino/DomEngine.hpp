@@ -5,7 +5,7 @@
 #include<string>
 #include<vector>
 #include <algorithm>
-#include "Tuile.hpp"
+#include "DomTuile.hpp"
 #include "Joueur.hpp"
 #include "EmplacementVide.hpp"
 #include "Wall.hpp"
@@ -25,13 +25,13 @@ class DomEngine : public Engine{
 
         // system
 
-        Tuile* tuileDeDepart;
-        Tuile* currentTuile;
+        DomTuile* DomTuileDeDepart;
+        DomTuile* currentDomTuile;
 
-        vector<Tuile*> sac;
+        vector<DomTuile*> sac;
         vector<vector<int>> tabCote ;
         vector<EmplacementVide*> tabEmplacement;
-        vector<Tuile*> plateau;
+        vector<DomTuile*> plateau;
 
     public:
 
@@ -41,22 +41,21 @@ class DomEngine : public Engine{
         virtual ~DomEngine();
 
         // fonctions
-        void drawTuile(Tuile* t);
+        void drawDomTuile(DomTuile* t);
 
         void input();
         void update();
         void draw();
-        void run();
 
         void startTheGame();
 
 
         void verification(EmplacementVide* ev);
-        bool isBonnePlace(EmplacementVide* ev, Tuile* t);
+        bool isBonnePlace(EmplacementVide* ev, DomTuile* t);
         bool isEqualHB(vector<int> v1,vector<int> v2);
         bool isEqualGD(vector<int> v1,vector<int> v2);
         void reverse(vector<int>* v);
-        void racks(Tuile* t);
+        void racks(DomTuile* t);
         void defausser();
         void joueurSuivant(int pts);
 

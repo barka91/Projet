@@ -49,9 +49,9 @@ class Engine{
         virtual void input()=0;
         virtual void update()=0;
         virtual void draw()=0;
-        virtual void run()=0;
+        void run();
 
-        virtual void startTheGame()=0;
+        void startTheGame();
         virtual void joueurSuivant(int pts)=0;
         void setupText(Text *textItem, const Font &font, const String &value, int size, Color colour);
 

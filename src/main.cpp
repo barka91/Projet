@@ -131,6 +131,7 @@
 
 #include <iostream>
 #include "Domino/DomEngine.hpp"
+#include "Trax/TraxEngine.hpp"
 
 //using namespace sf;
 
@@ -140,9 +141,23 @@ int main()
 	std::srand(static_cast<unsigned>(time(NULL)));
 
 	// Init Game engine
-	DomEngine domEngine{2};
+	TraxEngine TraxEngine{};
 	//Game loop
-	domEngine.run();
+	TraxEngine.run();
 	//End of application
 	return 0;
+
+	// -----------------------------------------------
+
+	// //Init srand
+	// std::srand(static_cast<unsigned>(time(NULL)));
+
+	// // Init Game engine
+	// DomEngine DomEngine{2};
+	// //Game loop
+	// DomEngine.run();
+	// //End of application
+	// return 0;
+
+	
 }

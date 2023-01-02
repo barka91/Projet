@@ -5,11 +5,14 @@
 #include<string>
 #include<vector>
 #include <algorithm>
-#include "Tuile.hpp"
 #include "Joueur.hpp"
-#include "EmplacementVide.hpp"
 #include "Wall.hpp"
+#include "Emplacement.hpp"
 #include "Engine.hpp"
+#include "TraxTuileDroit.hpp"
+#include "TraxTuileCourbe.hpp"
+#include "Tuile.hpp"
+
 
 
 using namespace std;
@@ -20,26 +23,35 @@ class TraxEngine : public Engine{
     private:
 
         // graphic (mettre en place ces bouttons)
-
+        TraxTuile* TraxTuileSelected;
+        RectangleShape button1;
+        Text buttonText1;
+        RectangleShape button2;
+        Text buttonText2;
+        
 
         // system
+        vector<TraxTuile*> tutu;
+        vector<vector<Emplacement*>> tabEmplacement;
+        string typeSelected;
 
 
     public:
 
 
         // constructeur et destructeur
-        TraxEngine(int nj);
+        TraxEngine();
         virtual ~TraxEngine();
 
         // fonctions
-        void drawTuile(Tuile* t);
 
         void input();
         void update();
         void draw();
-        void run();
 
+        void drawTraxTuile(TraxTuile* t);
+        
+        void change();
         void startTheGame();
 
         void joueurSuivant(int pts);
