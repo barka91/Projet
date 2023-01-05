@@ -1,5 +1,5 @@
-#ifndef _EMPLACEMENTVIDE
-#define _EMPLACEMENTVIDE
+#ifndef _DOMEMPLACEMENT
+#define _DOMEMPLACEMENT
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <vector>
@@ -9,7 +9,7 @@
 using namespace std;
 using namespace sf;
 
-class EmplacementVide : public Emplacement{
+class DomEmplacement : public Emplacement{
  
     private:
 
@@ -20,7 +20,7 @@ class EmplacementVide : public Emplacement{
 
   
     public:
-        EmplacementVide(Vector2f pos);
+        DomEmplacement(Vector2f pos);
 
         vector<int> getHaut() ;
         vector<int> getDroite();
@@ -34,12 +34,12 @@ class EmplacementVide : public Emplacement{
         void reverseGauche();
 
 
-        void mix(EmplacementVide* e);
+        void mix(DomEmplacement* e);
         int getPoints();
         
         string getVector(vector<int> v);
         
 
-    friend ostream& operator <<(ostream& out, EmplacementVide &e) ;        
+    friend ostream& operator <<(ostream& out, DomEmplacement &e) ;        
 };
 #endif

@@ -18,6 +18,7 @@ class Emplacement{
         Emplacement(Vector2f pos);
 
         RectangleShape getShape();
+        void setcolor(Color c);
 
     friend ostream& operator <<(ostream& out, Emplacement &e) ;        
 };

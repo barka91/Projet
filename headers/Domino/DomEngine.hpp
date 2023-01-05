@@ -7,7 +7,7 @@
 #include <algorithm>
 #include "DomTuile.hpp"
 #include "Joueur.hpp"
-#include "EmplacementVide.hpp"
+#include "DomEmplacement.hpp"
 #include "Wall.hpp"
 #include "Engine.hpp"
 
@@ -30,7 +30,7 @@ class DomEngine : public Engine{
 
         vector<DomTuile*> sac;
         vector<vector<int>> tabCote ;
-        vector<EmplacementVide*> tabEmplacement;
+        vector<DomEmplacement*> tabEmplacement;
         vector<DomTuile*> plateau;
 
     public:
@@ -50,8 +50,8 @@ class DomEngine : public Engine{
         void startTheGame();
 
 
-        void verification(EmplacementVide* ev);
-        bool isBonnePlace(EmplacementVide* ev, DomTuile* t);
+        void verification(DomEmplacement* ev);
+        bool isBonnePlace(DomEmplacement* ev, DomTuile* t);
         bool isEqualHB(vector<int> v1,vector<int> v2);
         bool isEqualGD(vector<int> v1,vector<int> v2);
         void reverse(vector<int>* v);

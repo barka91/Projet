@@ -1,11 +1,11 @@
-#include "Domino/EmplacementVide.hpp"
+#include "Domino/DomEmplacement.hpp"
 
-EmplacementVide::EmplacementVide(Vector2f pos):Emplacement(pos){
+DomEmplacement::DomEmplacement(Vector2f pos):Emplacement(pos){
  
 }
 
 
-string EmplacementVide::getVector(vector<int> v)
+string DomEmplacement::getVector(vector<int> v)
 {
     string out = "";
     if (!(v.empty()))
@@ -16,17 +16,17 @@ string EmplacementVide::getVector(vector<int> v)
     return out;
 }
 
-vector<int> EmplacementVide::getBas(){return bas;}
-vector<int> EmplacementVide::getDroite(){return droite;}
-vector<int> EmplacementVide::getHaut(){return haut;}
-vector<int> EmplacementVide::getGauche(){return gauche;}
+vector<int> DomEmplacement::getBas(){return bas;}
+vector<int> DomEmplacement::getDroite(){return droite;}
+vector<int> DomEmplacement::getHaut(){return haut;}
+vector<int> DomEmplacement::getGauche(){return gauche;}
 
-void EmplacementVide::setHaut(vector<int> t) { haut = t; }
-void EmplacementVide::setBas(vector<int> t) { bas = t; }
-void EmplacementVide::setDroite(vector<int> t){ droite = t;}
-void EmplacementVide::setGauche(vector<int> t){ gauche = t; }
+void DomEmplacement::setHaut(vector<int> t) { haut = t; }
+void DomEmplacement::setBas(vector<int> t) { bas = t; }
+void DomEmplacement::setDroite(vector<int> t){ droite = t;}
+void DomEmplacement::setGauche(vector<int> t){ gauche = t; }
 
-void EmplacementVide::reverseDroite()
+void DomEmplacement::reverseDroite()
 {
     // droite.at(0) = t.at(2);
     // droite.at(1) = t.at(1);
@@ -37,21 +37,21 @@ void EmplacementVide::reverseDroite()
 	droite.at(2)=a;
 }
 
-void EmplacementVide::reverseGauche()
+void DomEmplacement::reverseGauche()
 {
     int a = gauche.at(0);
 	gauche.at(0)=gauche.at(2);
 	gauche.at(2)=a;
 }
 
-void EmplacementVide::mix(EmplacementVide *ev){
+void DomEmplacement::mix(DomEmplacement *ev){
     if (this->getHaut().empty()) this->setHaut(ev->getHaut());
     if (this->getDroite().empty()) this->setDroite(ev->getDroite());
     if (this->getGauche().empty()) this->setGauche(ev->getGauche());
     if (this->getBas().empty()) this->setBas(ev->getBas());
 }
 
-int EmplacementVide::getPoints()
+int DomEmplacement::getPoints()
 {
     int res=0;
     if(!(this->getHaut().empty())) res++;
@@ -61,7 +61,7 @@ int EmplacementVide::getPoints()
     return res;
 }
 
-ostream &operator<<(ostream &out, EmplacementVide &e)
+ostream &operator<<(ostream &out, DomEmplacement &e)
 {
     
     out<<"haut"<<e.getVector(e.getHaut())

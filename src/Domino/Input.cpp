@@ -32,7 +32,7 @@ void DomEngine::input()
 			if (this->ev.mouseButton.button == sf::Mouse::Left){
 				Vector2f mouse = window->mapPixelToCoords(Mouse::getPosition(*window));
 				for (size_t i = 0; i < tabEmplacement.size(); i++) {
-					EmplacementVide* e = tabEmplacement.at(i);
+					DomEmplacement* e = tabEmplacement.at(i);
 					FloatRect bounds=e->getShape().getGlobalBounds();
 					if (bounds.contains(mouse)){
 						// si verification ok:
@@ -71,7 +71,7 @@ void DomEngine::input()
 			if (this->ev.mouseButton.button == sf::Mouse::Right){
 				Vector2f mouse = window->mapPixelToCoords(Mouse::getPosition(*window));
 				for (size_t i = 0; i < tabEmplacement.size(); i++) {
-					EmplacementVide* e = tabEmplacement.at(i);
+					DomEmplacement* e = tabEmplacement.at(i);
 					FloatRect bounds=e->getShape().getGlobalBounds();
 					if (bounds.contains(mouse)){
 						cout<<*e<<endl;

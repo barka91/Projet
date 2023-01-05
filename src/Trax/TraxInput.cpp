@@ -18,11 +18,26 @@ void TraxEngine::input()
 			break;
 		
 		case sf::Event::MouseButtonPressed:
+			Vector2f mouse = window->mapPixelToCoords(Mouse::getPosition(*window));
+			if(this->ev.mouseButton.button == sf::Mouse::Right){
+				for (int i = 0; i < 8; i++){
+					for (int j = 0; j < 8; j++) {
+						TraxEmplacement* e = tabTraxEmplacement.at(i).at(j);
+						FloatRect bounds=e->getShape().getGlobalBounds();
+						if (bounds.contains(mouse)){
+							info(e);
+						}
+					}
+				}
+
+			}
+
 			if (this->ev.mouseButton.button == sf::Mouse::Left){
+				cout<<coordCF.first<<coordCF.second<<endl;
 				Vector2f mouse = window->mapPixelToCoords(Mouse::getPosition(*window));
 
  				if( button1.getGlobalBounds().contains(mouse)){
-					TraxTuileSelected->tourner();
+					tourne();
 					
 				}
 
@@ -31,24 +46,36 @@ void TraxEngine::input()
 					
 				}
 
-				for (int i = 0; i < 8; i++){
-					for (int j = 0; j < 8; j++) {
-						Emplacement* e = tabEmplacement.at(i).at(j);
-						FloatRect bounds=e->getShape().getGlobalBounds();
-						if (bounds.contains(mouse)){
-							cout<<"yooooooooooo la kdjkjd"<<endl;
-							// tutu.push_back( new TraxTuileDroit(sf::Vector2f(e->getShape().getPosition())) );
-							TraxTuileSelected->setPosition(e->getShape().getPosition());
-							tutu.push_back(TraxTuileSelected );
-							TraxTuileSelected = new TraxTuileCourbe(sf::Vector2f(100,100));
-							// placer la tuile jsp si je fais un fonction qui place ou jutilise une methode qui change non je vais utiliser les deux 
-							break;
+				// a revoir 
+				int i,j;
+				if (coordCF.first != -1 && coordCF.second != -1)
+				{
+					i = coordCF.first;
+					j = coordCF.second;
+					TraxEmplacement* e = tabTraxEmplacement.at(coordCF.first).at(coordCF.second);
+					FloatRect bounds=e->getShape().getGlobalBounds();
+					if (bounds.contains(mouse)){
+						placement(e);
+						break;
+					}
+				}
+				else{
+					for (int i = 0; i < 8; i++){
+						for (int j = 0; j < 8; j++) {
+							TraxEmplacement* e = tabTraxEmplacement.at(i).at(j);
+							FloatRect bounds=e->getShape().getGlobalBounds();
+							if (bounds.contains(mouse)){
+								placement(e);
+								break;
+								}
+							}	
 						}
+					
 						
 					}
-				
-					
 				}
+				
+
 
 				// on place les nouveaux emplacements vides 
 				// racks(sac.at(0));
@@ -65,4 +92,3 @@ void TraxEngine::input()
 		
 		}
 	}
-}

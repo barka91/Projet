@@ -11,13 +11,13 @@ Joueur::Joueur(int i):id{i}, point{0}, current{false}{
     JText.setString(name);
     JText.setFillColor(Color::White);
     JText.setCharacterSize(25);
-    JText.setPosition(Vector2f(10.0f,200.0f + 70.f * i));
+    JText.setPosition(Vector2f(10.0f,300.0f + 70.f * i));
 
     JScore.setFont(font);
     JScore.setString(to_string(point));
     JScore.setFillColor(Color::White);
     JScore.setCharacterSize(25);
-    JScore.setPosition(Vector2f(150.0f,200.0f + 70.f * i));
+    JScore.setPosition(Vector2f(150.0f,300.0f + 70.f * i));
     cout<<"construction de joueur "<<*this;
 }
 

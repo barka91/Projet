@@ -8,11 +8,12 @@ project(projet)
 set(CMAKE_CXX_STANDARD 20)
 
 add_executable(projet src/main.cpp src/Wall.cpp headers/Wall.hpp headers/Joueur.hpp src/Joueur.cpp headers/Domino/DomTuile.hpp src/Domino/DomTuile.cpp 
-headers/Domino/DomEngine.hpp src/Domino/DomEngine.cpp src/Domino/Input.cpp headers/Domino/EmplacementVide.hpp src/Domino/EmplacementVide.cpp
+headers/Domino/DomEngine.hpp src/Domino/DomEngine.cpp src/Domino/Input.cpp headers/Domino/DomEmplacement.hpp src/Domino/DomEmplacement.cpp
 headers/Emplacement.hpp src/Emplacement.cpp headers/Engine.hpp src/Engine.cpp
 headers/Trax/TraxEngine.hpp src/Trax/TraxEngine.cpp src/Trax/TraxInput.cpp 
 headers/Tuile.hpp src/tuile.cpp headers/Trax/TraxTuile.hpp src/Trax/TraxTuile.cpp
-headers/Trax/TraxTuileDroit.hpp src/Trax/TraxTuileDroit.cpp headers/Trax/TraxTuileCourbe.hpp src/Trax/TraxTuileCourbe.cpp)
+headers/Trax/TraxTuileDroit.hpp src/Trax/TraxTuileDroit.cpp headers/Trax/TraxTuileCourbe.hpp src/Trax/TraxTuileCourbe.cpp
+headers/Trax/TraxEmplacement.hpp src/Trax/TraxEmplacement.cpp)
 
 include_directories(headers /usr/include c:/SFML/include)
 

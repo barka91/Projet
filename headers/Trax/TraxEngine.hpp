@@ -7,7 +7,7 @@
 #include <algorithm>
 #include "Joueur.hpp"
 #include "Wall.hpp"
-#include "Emplacement.hpp"
+#include "TraxEmplacement.hpp"
 #include "Engine.hpp"
 #include "TraxTuileDroit.hpp"
 #include "TraxTuileCourbe.hpp"
@@ -32,12 +32,22 @@ class TraxEngine : public Engine{
 
         // system
         vector<TraxTuile*> tutu;
-        vector<vector<Emplacement*>> tabEmplacement;
-        string typeSelected;
+        vector<vector<TraxEmplacement*>> tabTraxEmplacement;
+        
+        char faceSelected;
+        char hautSelected;
+        char gaucheSelected;
+        char droiteSelected;
+        char basSelected;
+
+        // coordonnee de l'enplacement du coup force
+        pair <int,int> coordCF;
+
+
 
 
     public:
-
+    
 
         // constructeur et destructeur
         TraxEngine();
@@ -51,10 +61,18 @@ class TraxEngine : public Engine{
 
         void drawTraxTuile(TraxTuile* t);
         
-        void change();
-        void startTheGame();
+        void setSelected(char f,char h, char g, char d, char b);
 
-        void joueurSuivant(int pts);
+        void change();
+        void tourne();
+        void placement(TraxEmplacement* e);
+        void startTheGame();
+        bool isBonnePlace(TraxEmplacement* e);
+        bool isCoupForce(int x,int y);
+        void racks(int x,int y);
+        void info(TraxEmplacement* e);
+
+        void joueurSuivant();
 
         
 };

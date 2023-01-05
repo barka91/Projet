@@ -41,7 +41,8 @@ void DomEngine::startTheGame() {
 
 }
 
-void DomEngine::verification(EmplacementVide* ev){
+void DomEngine::verification(DomEmplacement* ev){
+	// on verifie et on ajoute si c'est bon 
 	bool check = false;
 	for (auto & e : tabEmplacement) {
 		if (ev->getShape().getGlobalBounds().intersects(e->getShape().getGlobalBounds())){
@@ -58,7 +59,7 @@ void DomEngine::verification(EmplacementVide* ev){
 	tabEmplacement.push_back(ev);
 }
 
-bool DomEngine::isBonnePlace(EmplacementVide *ev, DomTuile *t){
+bool DomEngine::isBonnePlace(DomEmplacement *ev, DomTuile *t){
 	cout<<"ouhouuuuh"<<endl;
     if ( t->getHaut().size() == 3 && ev->getHaut().size() == 3 && !(isEqualHB(ev->getHaut(),t->getHaut()))) {
 		cout<<"hautttt"<<endl;
@@ -111,17 +112,17 @@ void DomEngine::reverse(vector<int>* v)
 void DomEngine::racks(DomTuile* t)
 {
 	// emplacement en dessous de la DomTuile place
-	EmplacementVide* a = new EmplacementVide{Vector2f(t->getPosition().x,t->getPosition().y+100)};
+	DomEmplacement* a = new DomEmplacement{Vector2f(t->getPosition().x,t->getPosition().y+100)};
 	a->setHaut(t->getBas());
 	verification(a);
 
 	// emplacement au dessus de la DomTuile place
-	EmplacementVide* b = new EmplacementVide{Vector2f(t->getPosition().x,t->getPosition().y-100)};
+	DomEmplacement* b = new DomEmplacement{Vector2f(t->getPosition().x,t->getPosition().y-100)};
 	b->setBas(t->getHaut());
 	verification(b);
 
 	// emplacement a droite de la DomTuile place
-	EmplacementVide* c = new EmplacementVide{Vector2f(t->getPosition().x+100,t->getPosition().y)};
+	DomEmplacement* c = new DomEmplacement{Vector2f(t->getPosition().x+100,t->getPosition().y)};
 	c->setGauche(t->getDroite());
 	cout<<c->getVector(c->getGauche())<<"aaaaaah"<<endl;
 	// c->reverseGauche();
@@ -129,7 +130,7 @@ void DomEngine::racks(DomTuile* t)
 	verification(c);
 
 	// emplacement a gauche de la DomTuile place
-	EmplacementVide* d = new EmplacementVide{Vector2f(t->getPosition().x-100,t->getPosition().y)};
+	DomEmplacement* d = new DomEmplacement{Vector2f(t->getPosition().x-100,t->getPosition().y)};
 	d->setDroite(t->getGauche());
 	// d->reverseDroite();
 	verification(d);
