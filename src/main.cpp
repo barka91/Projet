@@ -1,5 +1,6 @@
 // #include <iostream>
-// #include "DomEngine.hpp"
+// #include "Domino/DomEngine.hpp"
+// #include "Trax/TraxEngine.hpp"
 
 // //using namespace sf;
 
@@ -99,12 +100,17 @@
 
 // 				if( button2.getGlobalBounds().contains(mouse))
 // 				{
-// 					cout<<"Trax"<<endl;
+// 					// Init Game engine
+// 					TraxEngine TraxEngine{};
+// 					//Game loop
+// 					TraxEngine.run();
+// 					//End of application
+					
 // 				}
 
 // 				if( button3.getGlobalBounds().contains(mouse))
 // 				{
-// 					cout<<"Carcasonne"<<endl;
+// 					cout<<"Carcasonne en construction"<<endl;
 // 				}
 				
 // 			}

@@ -18,6 +18,11 @@ void TraxEngine::input()
 			break;
 		
 		case sf::Event::MouseButtonPressed:
+			if (currentGameState==GameState::GAMEOVER){
+				if(this->ev.mouseButton.button == sf::Mouse::Left) this->window->close();	
+			}
+			
+
 			Vector2f mouse = window->mapPixelToCoords(Mouse::getPosition(*window));
 			if(this->ev.mouseButton.button == sf::Mouse::Right){
 				for (int i = 0; i < 8; i++){
@@ -31,6 +36,7 @@ void TraxEngine::input()
 				}
 
 			}
+			
 
 			if (this->ev.mouseButton.button == sf::Mouse::Left){
 				

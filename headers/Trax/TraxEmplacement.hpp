@@ -48,7 +48,6 @@ class TraxEmplacement : public Emplacement{
         void setIsVide(bool b);
 
         bool isTuileForce();
-        // retourne si cette emplacment peut recoir un 
         bool canTake();
 
 

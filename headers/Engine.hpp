@@ -52,7 +52,7 @@ class Engine{
         void run();
 
         void startTheGame();
-        virtual void joueurSuivant()=0;
+        void joueurSuivant();
         void setupText(Text *textItem, const Font &font, const String &value, int size, Color colour);
 
         

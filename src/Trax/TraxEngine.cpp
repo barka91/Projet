@@ -11,7 +11,7 @@ TraxEngine::TraxEngine():Engine(2,"Trax"),isDebut{true}{
 	buttonText1.setCharacterSize(20);
 	buttonText1.setFillColor(sf::Color::White);
 
-	// Centrer le texte dans le bouton
+
 	sf::FloatRect textRect1 = buttonText1.getLocalBounds();
 	buttonText1.setOrigin(textRect1.left + textRect1.width / 2.0f,
 						textRect1.top + textRect1.height / 2.0f);
@@ -27,7 +27,6 @@ TraxEngine::TraxEngine():Engine(2,"Trax"),isDebut{true}{
 	buttonText2.setCharacterSize(20);
 	buttonText2.setFillColor(sf::Color::White);
 
-	// Centrer le texte dans le bouton
 	sf::FloatRect textRect2 = buttonText2.getLocalBounds();
 	buttonText2.setOrigin(textRect2.left + textRect2.width / 2.0f,
 						textRect2.top + textRect2.height / 2.0f);
@@ -40,12 +39,23 @@ TraxEngine::TraxEngine():Engine(2,"Trax"),isDebut{true}{
 
 TraxEngine::~TraxEngine()
 {
+	for (int i = 0; i < 8; i++)
+	{	
+		for (int j = 0; j < 8; j++)
+		{
+		delete tabTraxEmplacement.at(i).at(j);	
+		}
+		
+	}
+	delete TraxTuileSelected;
 }
 
 
 void TraxEngine::startTheGame()
 {
 	Engine::startTheGame();
+
+	// on initialise le plateau qui est un matrice 8*8 de traxEmplacement
 	vector<TraxEmplacement*> t ;
 	for (int i = 0; i < 8; i++)
 	{	
@@ -57,39 +67,42 @@ void TraxEngine::startTheGame()
 		t.clear();
 	}
 
+	// on initialise la tuile selectionne
 	TraxTuileSelected = new TraxTuileDroit(sf::Vector2f(100,100));
 	setSelected('d','n','b','n','b');
 
+	// ces coordonnees vont indiquer la position d'un coup force
 	coordCF = make_pair(-1,-1);
 
 }
+
 bool TraxEngine::isBonnePlace(TraxEmplacement* e)
 {
+	// si cette tuile ne peut pas etre utilisee et que ce n'est pas le debut du jeu on sort de la fonction
 	if (!e->canTake() && !isDebut)return false;
+
 	if(e->getHaut() != hautSelected && e->getHaut() !=0) {
 		cout<<"h"<<e->getHaut()<<hautSelected<<endl;
-		
 		return false;
 	}
+
 	if(e->getDroite() != droiteSelected && e->getDroite() !=0) {
 		cout<<"d"<<e->getDroite()<<droiteSelected<<endl;
 		return false;
 	}
+
 	if(e->getBas() != basSelected && e->getBas() !=0) {
 		cout<<"b"<<e->getBas()<<basSelected<<endl;
-
 		return false;
 	}
+
 	if(e->getGauche() != gaucheSelected && e->getGauche() !=0) {
 		cout<<"g"<<e->getGauche()<<gaucheSelected<<endl;
-
 		return false;
 	}
-	cout<<"h"<<e->getHaut()<<hautSelected<<endl;
-	cout<<"d"<<e->getDroite()<<droiteSelected<<endl;
-	cout<<"b"<<e->getBas()<<basSelected<<endl;
-	cout<<"g"<<e->getGauche()<<gaucheSelected<<endl;
-	// isDebut=false;
+
+	
+
 	return true;
     
 }
@@ -207,6 +220,7 @@ void TraxEngine::placement(TraxEmplacement *e)
 		racks(x,y);
 
 		// on redefini une nouvelle tuile a placer
+		
 		TraxTuileSelected = new TraxTuileDroit(sf::Vector2f(100,100));
 		setSelected('d','n','b','n','b');
 

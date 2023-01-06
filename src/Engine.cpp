@@ -24,8 +24,10 @@ void Engine::run()
 	{
 		if ( currentGameState == GameState::GAMEOVER) {
 			draw();
+			input();
 			sleep(milliseconds(2)); // sleep so we don't peg the CPU
 			continue;
+
 		}
 		// input
 		input();

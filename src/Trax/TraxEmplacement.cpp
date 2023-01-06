@@ -1,7 +1,7 @@
 #include "Trax/TraxEmplacement.hpp"
 
 
-TraxEmplacement::TraxEmplacement(Vector2f pos,int x,int y):Emplacement(pos), isVide{true},x{x},y{y}{
+TraxEmplacement::TraxEmplacement(Vector2f pos,int x,int y):Emplacement(pos), isVide{true},x{x},y{y},haut{0},droite{0},bas{0},gauche{0}{
     sprite.setOutlineColor(Color::Black);
     sprite.setOutlineThickness(1.f);
 
@@ -34,6 +34,7 @@ void TraxEmplacement::setIsVide(bool b)
     isVide=b;
 }
 
+// permet de savoir si l'emplacement est generatrice d'un coup force
 bool TraxEmplacement::isTuileForce()
 {
     if (!isVide) return false;
@@ -46,6 +47,7 @@ bool TraxEmplacement::isTuileForce()
     else return false;
 }
 
+// permet de savoir si un emplacement peut recevoir une tuile 
 bool TraxEmplacement::canTake()
 {
     // si au moins un coté a une valeur c'est qu'il est a coté d'une tuile
