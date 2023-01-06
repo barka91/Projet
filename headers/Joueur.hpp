@@ -11,7 +11,7 @@ using namespace sf;
 
 class Joueur{
     private:
-        int id;
+        const int id;
         int point;
         bool current;            
         // s'occuper de la couleur du joueur et afficher le score a la fin
@@ -24,9 +24,11 @@ class Joueur{
         Joueur(int i);
         virtual ~Joueur();
         int getId();
+        int getPoint();
+        bool getCurrent();
+        
         void setPoint(int p);
         void setCurrent(bool c);
-        bool getCurrent();
 
         Text getJText();
         Text getJScore();

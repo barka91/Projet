@@ -32,9 +32,6 @@ class DomEmplacement : public Emplacement{
         void setBas(vector<int> t);
         void setGauche(vector<int> t);
 
-        void reverseDroite();
-        void reverseGauche();
-
         void mix(DomEmplacement* e);
         int getPoints();
         

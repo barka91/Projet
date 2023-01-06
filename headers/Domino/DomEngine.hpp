@@ -49,13 +49,11 @@ class DomEngine : public Engine{
 
         void startTheGame();
 
-
         void verification(DomEmplacement* ev);
         bool isBonnePlace(DomEmplacement* ev, DomTuile* t);
         bool isEqualHB(vector<int> v1,vector<int> v2);
         bool isEqualGD(vector<int> v1,vector<int> v2);
-        void reverse(vector<int>* v);
-        void racks(DomTuile* t);
+        void initVoisin(DomTuile* t);
         void defausser();
         void joueurSuivant(int pts);
 

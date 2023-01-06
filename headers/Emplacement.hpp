@@ -13,7 +13,6 @@ class Emplacement{
     protected:
         RectangleShape sprite;
 
-  
     public:
         Emplacement(Vector2f pos);
 

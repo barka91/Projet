@@ -12,15 +12,10 @@ using namespace sf;
 class TraxTuileDroit : public TraxTuile {
 
     private:
-    
 
     public:
         TraxTuileDroit(Vector2f pos);
         virtual ~TraxTuileDroit();
-        
-
-        
-    
 
     friend ostream& operator <<(ostream& out, Tuile &t) ;        
 };

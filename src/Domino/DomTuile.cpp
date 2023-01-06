@@ -1,7 +1,4 @@
 #include "Domino/DomTuile.hpp"
-#include<iostream>
-#include <vector>
-#include<string>
 
 using namespace std;
 
@@ -34,7 +31,7 @@ DomTuile::DomTuile(vector<int> h,vector<int> d,vector<int> b,vector<int> g, Vect
     // initialisation de la position de la DomTuile 
     setPosition(pos);
 
-    cout<<"Construction de "<< *this<<endl;
+
 }
 
 DomTuile::DomTuile(DomTuile &t): Tuile(t),
@@ -56,13 +53,9 @@ DomTuile::DomTuile(DomTuile &t): Tuile(t),
     // constructeur par copie
 }
 
-DomTuile::DomTuile():Tuile(){
-;
-}
+DomTuile::DomTuile():Tuile(){}
 
-DomTuile::~DomTuile(){
-     cout<<"Destruction de DomTuile "<<*this<<endl;
-}
+DomTuile::~DomTuile(){}
 
 vector<int> DomTuile::getBas(){return bas;}
 vector<int> DomTuile::getDroite(){return droite;}
@@ -122,21 +115,27 @@ void DomTuile::setDroite(vector<int> t){ droite = t;}
 void DomTuile::setGauche(vector<int> t){ gauche = t;}
 void DomTuile::setHaut(vector<int> t){ haut = t;}
 
-// DomTuile* DomTuile::getNord(){return nord;}
-
 void DomTuile::tourner(){
     vector<int> tmpH = getHaut();
-    setHaut( getGauche() );
+    setHaut( reverse(getGauche()) );
     setDomTuileString(haut,&top);
-    vector<int> tmpD = getDroite();
+
+    vector<int> tmpD = reverse(getDroite());
     setDroite( tmpH );
     setDomTuileGD(droite,"droite");
+
     vector<int> tmpB = getBas();
     setBas( tmpD );
     setDomTuileString(bas,&down);
+    
     setGauche( tmpB );
     setDomTuileGD(gauche,"gauche");
-    cout<<getBas().at(0)<<getBas().at(1)<<getBas().at(2)<<endl;
+}
+
+vector<int> DomTuile::reverse(vector<int> v)
+{
+    vector<int> res = {v.at(2),v.at(1),v.at(0)};
+    return res;
 }
 
 void DomTuile::setupTextV(Text *textItem, const Font &font, const vector<int> v, int size, Color colour,float angle) {
@@ -160,19 +159,5 @@ void DomTuile::setupTextS(Text *textItem, const Font &font, const string s, int 
     auto bounds = textItem->getLocalBounds();
     textItem->setOrigin( bounds.width / 2.f, bounds.height / 2.f );
     textItem->setRotation(angle);
-}
-
-ostream& operator<<( ostream& out , DomTuile &t){
-    // out<<"DomTuile\n  ";
-    // for(int i=0; i<3; i++)
-    //     out<<t.getHaut().at(i)<<" ";
-    // out<<" \n";
-    // for(int i=0; i<3; i++)
-    //     out<<t.getGauche()[3-i-1]<<"       "<<t.getDroite()[i]<<endl;
-    // out<<"  ";
-    // for( int i=2; i>=0; i--)
-    //     out<<t.getBas().at(i)<<" ";
-    // out<<" ";
-    // return out ;
 }
 

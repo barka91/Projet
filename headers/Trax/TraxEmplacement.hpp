@@ -12,8 +12,6 @@ using namespace sf;
 class TraxEmplacement : public Emplacement{
  
     private:
-    // Blanc = 0; Noir = 1
-        
         char face;
         char haut;
         char droite;

@@ -26,24 +26,6 @@ void DomEmplacement::setBas(vector<int> t) { bas = t; }
 void DomEmplacement::setDroite(vector<int> t){ droite = t;}
 void DomEmplacement::setGauche(vector<int> t){ gauche = t; }
 
-void DomEmplacement::reverseDroite()
-{
-    // droite.at(0) = t.at(2);
-    // droite.at(1) = t.at(1);
-    // droite.at(2) = t.at(0);
-
-    int a = droite.at(0);
-	droite.at(0)=droite.at(2);
-	droite.at(2)=a;
-}
-
-void DomEmplacement::reverseGauche()
-{
-    int a = gauche.at(0);
-	gauche.at(0)=gauche.at(2);
-	gauche.at(2)=a;
-}
-
 void DomEmplacement::mix(DomEmplacement *ev){
     if (this->getHaut().empty()) this->setHaut(ev->getHaut());
     if (this->getDroite().empty()) this->setDroite(ev->getDroite());

@@ -8,8 +8,6 @@
 #include "Wall.hpp"
 #include "Joueur.hpp"
 
-
-
 using namespace std;
 using namespace sf;
 
@@ -17,7 +15,6 @@ class Engine{
     
     protected:
         const int SCRWIDTH = sf::VideoMode::getDesktopMode().width;
-
         const int SCRHEIGHT = sf::VideoMode::getDesktopMode().height;
         // window
         RenderWindow* window;
@@ -30,9 +27,13 @@ class Engine{
         vector<Wall> wallSection;
         Text gameOverText;
 
+        RectangleShape button1;
+        Text buttonText1;
+        RectangleShape button2;
+        Text buttonText2;
+
         // system
         int nbJoueurs;
-       
         vector<Joueur*> tabJoueurs;
 
         int currentGameState;

@@ -24,14 +24,11 @@ class TraxEngine : public Engine{
 
         // graphic (mettre en place ces bouttons)
         TraxTuile* TraxTuileSelected;
-        RectangleShape button1;
-        Text buttonText1;
-        RectangleShape button2;
-        Text buttonText2;
+        
         
 
         // system
-        vector<TraxTuile*> tutu;
+        vector<TraxTuile*> plateau;
         vector<vector<TraxEmplacement*>> tabTraxEmplacement;
         
         char faceSelected;
@@ -45,9 +42,6 @@ class TraxEngine : public Engine{
 
         bool isDebut;
 
-
-
-
     public:
     
 
@@ -60,19 +54,16 @@ class TraxEngine : public Engine{
         void input();
         void update();
         void draw();
-
-        void drawTraxTuile(TraxTuile* t);
         
+        void startTheGame();
+        void drawTraxTuile(TraxTuile* t);
         void setSelected(char f,char h, char g, char d, char b);
-
         void change();
         void tourne();
         void placement(TraxEmplacement* e);
-        void startTheGame();
         bool isBonnePlace(TraxEmplacement* e);
         bool isCoupForce(int x,int y);
-        void racks(int x,int y);
-        void info(TraxEmplacement* e);
+        void initVoisin(int x,int y);
 
         bool detectoCircuit(char c,TraxEmplacement* e);
         bool detectoLigne(char c);

@@ -25,13 +25,7 @@ class DomTuile : public Tuile{
         Text right0;
         Text right1;
         Text right2;
-        Text down;     
-
-        DomTuile* nord;
-        DomTuile* ouest;
-        DomTuile* est;
-        DomTuile* sud;
-
+        Text down;
         
     public:
         DomTuile(vector<int> h,vector<int> d,vector<int> b,vector<int> g, Vector2f pos);
@@ -68,6 +62,7 @@ class DomTuile : public Tuile{
 
         void setPosition(Vector2f pos);
         void tourner();
+        vector<int> reverse(vector<int> v);
 
     friend ostream& operator <<(ostream& out, DomTuile &t) ;        
 };

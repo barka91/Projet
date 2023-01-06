@@ -18,12 +18,10 @@ Joueur::Joueur(int i):id{i}, point{0}, current{false}{
     JScore.setFillColor(Color::White);
     JScore.setCharacterSize(25);
     JScore.setPosition(Vector2f(150.0f,300.0f + 70.f * i));
-    cout<<"construction de joueur "<<*this;
+
 }
 
-Joueur::~Joueur(){
-    cout<<"destruction de joueur "<<*this;
-}
+Joueur::~Joueur(){}
 
 ostream& operator<<(ostream& out, Joueur &j){
     out << "Joueur est " << j.getId() << endl;
@@ -31,6 +29,7 @@ ostream& operator<<(ostream& out, Joueur &j){
 }
 
 int Joueur::getId(){return id;}
+int Joueur::getPoint(){return point;}
 
 void Joueur::setPoint(int p){
     point += p;
