@@ -7,6 +7,8 @@ TraxEmplacement::TraxEmplacement(Vector2f pos,int x,int y):Emplacement(pos), isV
 
 }
 
+
+
 char TraxEmplacement::getFace(){return face;}
 char TraxEmplacement::getHaut(){return haut;}
 char TraxEmplacement::getDroite(){return droite;}
@@ -42,4 +44,15 @@ bool TraxEmplacement::isTuileForce()
     if (droite==gauche && droite!=0 && gauche!=0) return true;
     if (bas==gauche && bas!=0 && gauche!=0) return true;
     else return false;
+}
+
+bool TraxEmplacement::canTake()
+{
+    // si au moins un coté a une valeur c'est qu'il est a coté d'une tuile
+    if (haut!=0)return true;
+    if (droite!=0)return true;
+    if (bas!=0)return true;
+    if (gauche!=0)return true;
+    return false;
+
 }

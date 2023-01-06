@@ -33,7 +33,8 @@ void TraxEngine::input()
 			}
 
 			if (this->ev.mouseButton.button == sf::Mouse::Left){
-				cout<<coordCF.first<<coordCF.second<<endl;
+				
+				cout<<coordCF.first<<coordCF.second<<to_string('c'=='c')<<endl;
 				Vector2f mouse = window->mapPixelToCoords(Mouse::getPosition(*window));
 
  				if( button1.getGlobalBounds().contains(mouse)){
@@ -66,6 +67,8 @@ void TraxEngine::input()
 							FloatRect bounds=e->getShape().getGlobalBounds();
 							if (bounds.contains(mouse)){
 								placement(e);
+								
+								
 								break;
 								}
 							}	

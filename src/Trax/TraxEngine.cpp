@@ -1,8 +1,6 @@
 #include "Trax/TraxEngine.hpp"
 
-
-
-TraxEngine::TraxEngine():Engine(2,"Trax"){
+TraxEngine::TraxEngine():Engine(2,"Trax"),isDebut{true}{
 	
 	button1.setSize(Vector2f(100, 40));
 	button1.setPosition(50, 175);
@@ -67,6 +65,7 @@ void TraxEngine::startTheGame()
 }
 bool TraxEngine::isBonnePlace(TraxEmplacement* e)
 {
+	if (!e->canTake() && !isDebut)return false;
 	if(e->getHaut() != hautSelected && e->getHaut() !=0) {
 		cout<<"h"<<e->getHaut()<<hautSelected<<endl;
 		
@@ -90,6 +89,7 @@ bool TraxEngine::isBonnePlace(TraxEmplacement* e)
 	cout<<"d"<<e->getDroite()<<droiteSelected<<endl;
 	cout<<"b"<<e->getBas()<<basSelected<<endl;
 	cout<<"g"<<e->getGauche()<<gaucheSelected<<endl;
+	// isDebut=false;
 	return true;
     
 }
@@ -196,8 +196,11 @@ void TraxEngine::placement(TraxEmplacement *e)
 		TraxTuileSelected->setPosition(e->getShape().getPosition());
 		tutu.push_back(TraxTuileSelected );
 
-		// on dit que la tuile n'est plus vide
-		e->setIsVide(false);
+		// on initialise les autres coté
+		e->setHaut(hautSelected);
+		e->setDroite(droiteSelected);
+		e->setBas(basSelected);
+		e->setGauche(gaucheSelected);
 									
 		cout<<"x="<<x<<" y="<<y<<endl;
 		// on ajoute les infos sur les emplacements a proximite
@@ -209,9 +212,39 @@ void TraxEngine::placement(TraxEmplacement *e)
 
 		// on remet a -(1,-1) coordCF
 		coordCF = make_pair(-1,-1);
+	
+		// on dit que la tuile n'est plus vide
+		e->setIsVide(false);
 
+		//on verifie si il y a un circuit
+		if (detectoCircuit('b',e)) {
+			currentGameState = GameState::GAMEOVER;
+			setupText(&gameOverText, mainFont, "victoire circuit blanc", 72, Color::White);
+			cout<<"victore circuit blanc"<<endl;
+		}
+		if(detectoLigne('b')){
+			currentGameState = GameState::GAMEOVER;
+			setupText(&gameOverText, mainFont, "victoire ligne blanc", 72, Color::Yellow);
+			cout<<"victore ligne blanc"<<endl;
+		}
+		if(detectoCircuit('n',e)){
+			currentGameState = GameState::GAMEOVER;
+			setupText(&gameOverText, mainFont, "victoire circuit noir", 72, Color::Yellow);
+			cout<<"victore circuit noir"<<endl;
+		}
+		if(detectoLigne('n')){
+			currentGameState = GameState::GAMEOVER;
+			setupText(&gameOverText, mainFont, "victoire ligne noir", 72, Color::Yellow);
+			cout<<"victore ligne noir"<<endl;
+		}
+		
 		// on change de joueur si il n'y a pas de coup forcé
 		if (!isCoupForce(x,y))joueurSuivant();
+
+		// on mets isDebut a false
+		isDebut=false;
+		
+		
 	}
 }
 
@@ -228,6 +261,7 @@ void TraxEngine::joueurSuivant()
 
 void TraxEngine::update()
 {
+	// on update dans le input car on a besoin du la derniere tuile placé
 	// currentGameState = GameState::GAMEOVER;
 }
 
@@ -263,6 +297,10 @@ void TraxEngine::draw()
 	window->draw(buttonText1);
 	window->draw(button2);
 	window->draw(buttonText2);
+
+	if (currentGameState == GameState::GAMEOVER) {
+		window->draw(gameOverText);
+	}
     
     window->display();
 }
@@ -285,5 +323,176 @@ void TraxEngine::info(TraxEmplacement* e){
 	cout<<"h"<<e->getHaut()<<endl;
 	cout<<"d"<<e->getDroite()<<endl;
 	cout<<"b"<<e->getBas()<<endl;
-	cout<<"g"<<e->getGauche()<<endl;
+    cout << "g" << e->getGauche() << endl;
+}
+
+bool TraxEngine::detectoCircuit(char c, TraxEmplacement *e)
+{
+	TraxEmplacement* tmpe = e; 
+	char cote_interdit = 'x';
+	cout<<"isdebut?"<<isDebut<<endl;
+	if (isDebut)return false;
+	do{
+	 	cout<<"brrrr"<<endl;
+		cout<<"ci "<<cote_interdit<<" gy "<<tmpe->getY() <<tmpe->getX()<<" gh " <<tmpe->getHaut()<<endl;
+		if ( cote_interdit!='h' && tmpe->getY()>0 && tmpe->getHaut()==c && !tabTraxEmplacement.at(tmpe->getX()).at(tmpe->getY()-1)->getIsVide()){
+		cout<<"brrrr h"<<endl;
+			
+			tmpe = tabTraxEmplacement.at(tmpe->getX()).at(tmpe->getY()-1);
+			cote_interdit ='b';
+			continue;
+		}
+		// cout<<"brrrr545"<<endl;
+
+
+		if(cote_interdit!='d' && tmpe->getX()<7 && tmpe->getDroite()==c &&
+		!tabTraxEmplacement.at(tmpe->getX()+1).at(tmpe->getY())->getIsVide()){
+		cout<<"brrrr d"<<endl;
+			
+			tmpe = tabTraxEmplacement.at(tmpe->getX()+1).at(tmpe->getY());
+			cote_interdit ='g';
+			continue;
+		cout<<"brrrr545"<<endl;
+		}
+
+		if(cote_interdit!='b' && tmpe->getY()<7 &&tmpe->getBas()==c &&
+		!tabTraxEmplacement.at(tmpe->getX()).at(tmpe->getY()+1)->getIsVide()){
+		cout<<"brrrr b"<<endl;
+
+
+			tmpe = tabTraxEmplacement.at(tmpe->getX()).at(tmpe->getY()+1);
+			cote_interdit ='h';
+			continue;
+		}
+
+		if(cote_interdit!='g' && tmpe->getX()>0 && tmpe->getGauche()==c &&
+		!tabTraxEmplacement.at(tmpe->getX()-1).at(tmpe->getY())->getIsVide()){
+		cout<<"brrrr g"<<endl;
+			
+			tmpe = tabTraxEmplacement.at(tmpe->getX()-1).at(tmpe->getY());
+			cote_interdit ='d';
+			continue;
+		}
+		return false;
+
+	} while (e!=tmpe);
+	cout<<"brrrr6"<<endl;
+	
+	cout<<"remind me what said khabib?"<<endl;
+	return true;
+
+    
+}
+
+bool TraxEngine::detectoLigne(char c)
+{
+	for (int i = 0; i < 7; i++){	
+		TraxEmplacement* tmpe =  tabTraxEmplacement.at(0).at(i);
+		if (!tmpe->getIsVide() && tmpe->getDroite()==c){
+			if(detectoLigneHori(tmpe,c)) return true;
+		}
+	}
+
+	for (int i = 0; i < 7; i++){	
+		TraxEmplacement* tmpe =  tabTraxEmplacement.at(i).at(0);
+		if (!tmpe->getIsVide() && tmpe->getHaut()==c){
+			if(detectoLigneVert(tmpe,c)) return true;
+		}
+	}
+
+	return false;
+}
+
+bool TraxEngine::detectoLigneHori(TraxEmplacement* tmpe,char c){
+	char cote_interdit = 'g';
+
+	while (!(tmpe->getX()==7 && tmpe->getGauche()==c)){
+		cout<<"brrroo"<<endl;
+		if (cote_interdit!='h' && tmpe->getY()>0 && tmpe->getHaut()==c && 
+		!tabTraxEmplacement.at(tmpe->getX()).at(tmpe->getY()-1)->getIsVide()){
+		cout<<"brrrr h"<<endl;
+			
+			tmpe = tabTraxEmplacement.at(tmpe->getX()).at(tmpe->getY()-1);
+			cote_interdit ='b';
+			continue;
+		}
+
+		if(cote_interdit!='d' && tmpe->getX()<7 && tmpe->getDroite()==c &&
+		!tabTraxEmplacement.at(tmpe->getX()+1).at(tmpe->getY())->getIsVide()){
+		cout<<"brrrr d"<<endl;
+			
+			tmpe = tabTraxEmplacement.at(tmpe->getX()+1).at(tmpe->getY());
+			cote_interdit ='g';
+			continue;
+		}
+
+		if(cote_interdit!='b' && tmpe->getY()<7 &&tmpe->getBas()==c &&
+		!tabTraxEmplacement.at(tmpe->getX()).at(tmpe->getY()+1)->getIsVide()){
+		cout<<"brrrr b"<<endl;
+
+			tmpe = tabTraxEmplacement.at(tmpe->getX()).at(tmpe->getY()+1);
+			cote_interdit ='h';
+			continue;
+		}
+
+		if(cote_interdit!='g' && tmpe->getX()>0 && tmpe->getGauche()==c &&
+		!tabTraxEmplacement.at(tmpe->getX()-1).at(tmpe->getY())->getIsVide()){
+		cout<<"brrrr g"<<endl;
+			
+			tmpe = tabTraxEmplacement.at(tmpe->getX()-1).at(tmpe->getY());
+			cote_interdit ='d';
+			continue;
+		}
+
+		return false;
+	}		
+	cout<<"remind me what said khabib?"<<endl;
+	return true;
+}
+
+bool TraxEngine::detectoLigneVert(TraxEmplacement* tmpe,char c){
+	char cote_interdit = 'h';
+
+	while (!(tmpe->getY()==7 && tmpe->getBas()==c)){
+		cout<<"brrroovert"<<endl;
+		if (cote_interdit!='h' && tmpe->getY()>0 && tmpe->getHaut()==c && 
+		!tabTraxEmplacement.at(tmpe->getX()).at(tmpe->getY()-1)->getIsVide()){
+		cout<<"brrrr h"<<endl;
+			
+			tmpe = tabTraxEmplacement.at(tmpe->getX()).at(tmpe->getY()-1);
+			cote_interdit ='b';
+			continue;
+		}
+
+		if(cote_interdit!='d' && tmpe->getX()<7 && tmpe->getDroite()==c &&
+		!tabTraxEmplacement.at(tmpe->getX()+1).at(tmpe->getY())->getIsVide()){
+		cout<<"brrrr d"<<endl;
+			
+			tmpe = tabTraxEmplacement.at(tmpe->getX()+1).at(tmpe->getY());
+			cote_interdit ='g';
+			continue;
+		}
+
+		if(cote_interdit!='b' && tmpe->getY()<7 &&tmpe->getBas()==c &&
+		!tabTraxEmplacement.at(tmpe->getX()).at(tmpe->getY()+1)->getIsVide()){
+		cout<<"brrrr b"<<endl;
+
+			tmpe = tabTraxEmplacement.at(tmpe->getX()).at(tmpe->getY()+1);
+			cote_interdit ='h';
+			continue;
+		}
+
+		if(cote_interdit!='g' && tmpe->getX()>0 && tmpe->getGauche()==c &&
+		!tabTraxEmplacement.at(tmpe->getX()-1).at(tmpe->getY())->getIsVide()){
+		cout<<"brrrr g"<<endl;
+			
+			tmpe = tabTraxEmplacement.at(tmpe->getX()-1).at(tmpe->getY());
+			cote_interdit ='d';
+			continue;
+		}
+
+		return false;
+	}		
+	cout<<"remind me what said khabib?"<<endl;
+	return true;
 }

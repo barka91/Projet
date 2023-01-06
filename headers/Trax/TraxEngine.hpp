@@ -43,6 +43,8 @@ class TraxEngine : public Engine{
         // coordonnee de l'enplacement du coup force
         pair <int,int> coordCF;
 
+        bool isDebut;
+
 
 
 
@@ -71,6 +73,11 @@ class TraxEngine : public Engine{
         bool isCoupForce(int x,int y);
         void racks(int x,int y);
         void info(TraxEmplacement* e);
+
+        bool detectoCircuit(char c,TraxEmplacement* e);
+        bool detectoLigne(char c);
+        bool detectoLigneHori(TraxEmplacement* e,char c);
+        bool detectoLigneVert(TraxEmplacement* e,char c);
 
         void joueurSuivant();
 
